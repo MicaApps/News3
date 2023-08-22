@@ -1,0 +1,6 @@
+﻿<ArrayOfArrayOfstring xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <ArrayOfstring>
+        <string>ZhiHu</string>
+        <string>http://www.cnn.com/services/rss/</string>
+    </ArrayOfstring>
+</ArrayOfArrayOfstring>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<tile>
+<visual>
+
+<binding template="TileMedium" displayName="FreeRSS" branding="name">
+<text hint-style="caption" hint-wrap="true" hint-maxLines="2">Tiles</text>
+<text hint-style="captionSubtle">PublishedDate</text>
+</binding>
+
+<binding template="TileWide" displayName="FreeRSS" branding="name">
+<group>
+  <subgroup hint-weight="33">
+    <image src="Assets\StoreLogo.png"/>
+  </subgroup>
+  <subgroup>
+    <text hint-style="subTltle" hint-wrap="true" hint-maxLines="2">Titles</text>
+    <text hint-style="captionSubtle">PublishedDate</text>
+  </subgroup>
+</group>
+
+</binding>
+
+<binding template="TileLarge" displayName="FreeRSS" branding="name">
+<text hint-style="subtitle" hint-wrap="true" hint-maxLines="2">Titles</text>
+<text hint-style="captionSubtle">PublishedDate</text>
+<text hint-style="caption" hint-wrap="true" hint-maxLines="6">Summary</text>
+ 
+</binding>
+
+</visual>
+
+</tile>
