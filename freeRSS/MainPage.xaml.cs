@@ -32,8 +32,8 @@ namespace freeRSS
         public static MainPage Current = null;
 
         public MainViewModel ViewModel { get; } = new MainViewModel();
-        public ObservableCollection<FeedsListItemViewModel> Items { get; set; }
-        public ObservableCollection<FeedsListItemViewModel> FooterItems { get; set; }
+        public ObservableCollection<FeedsListItemViewModel> Items { get; set; } = new ObservableCollection<FeedsListItemViewModel>();
+        public ObservableCollection<FeedsListItemViewModel> FooterItems { get; set; } = new ObservableCollection<FeedsListItemViewModel>();
 
         private bool IsSeted = false;
 
@@ -66,6 +66,11 @@ namespace freeRSS
                     editbutton.Content = new TextBlock() { Text = "Edit Subscription" };
                     FooterItems.Add((FeedsListItemViewModel)editbutton);
                     FooterItems.Add((FeedsListItemViewModel)addbutton);
+
+                    foreach(var v in ViewModel.Feeds)
+                    {
+                        Items.Add(v);
+                    }
                 }
                 catch { }
             };
@@ -165,8 +170,13 @@ namespace freeRSS
             FeedsList.SelectedItem = null;
             RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
         }
+        private IAsyncAction awaitvoid(Action action)
+        {
+            action();
+            return default;
+        }
 
-        private void SelectionChangedAsync()
+        private async void SelectionChangedAsync()
         {
             if (RSS_ArticleListView.SelectedIndex >= 0)
             {
@@ -180,31 +190,34 @@ namespace freeRSS
                 //
                 // by Elipese
                 // 2023/7/16
-                string content = "";
-                if(ViewModel.CurrentArticle.Rtf == null)
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    Spire.Doc.Document doc = new Spire.Doc.Document();
-                    StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                    doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
-                    MemoryStream ms = new MemoryStream();
-                    doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
-                    byte[] data = ms.ToArray();
-                    sr.Close();
-                    ms.Close();
-                    doc.Close();
-                    content = Encoding.Default.GetString(data);
-                    ViewModel.CurrentArticle.Rtf = content;
-                }
-                else
-                {
-                    content = ViewModel.CurrentArticle.Rtf;
-                }
-               
-                ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
-                ArticleWebView.Visibility = Visibility.Visible;
-                ArticleWebView.IsReadOnly = true;
-                LoadingProgressBar.IsActive = false;
-                LoadingProgressBar.Visibility = Visibility.Collapsed;
+                    string content = "";
+                    if (ViewModel.CurrentArticle.Rtf == null)
+                    {
+                        Spire.Doc.Document doc = new Spire.Doc.Document();
+                        StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                        doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
+                        MemoryStream ms = new MemoryStream();
+                        doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
+                        byte[] data = ms.ToArray();
+                        sr.Close();
+                        ms.Close();
+                        doc.Close();
+                        content = Encoding.Default.GetString(data);
+                        ViewModel.CurrentArticle.Rtf = content;
+                    }
+                    else
+                    {
+                        content = ViewModel.CurrentArticle.Rtf;
+                    }
+
+                    ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
+                    ArticleWebView.Visibility = Visibility.Visible;
+                    ArticleWebView.IsReadOnly = true;
+                    LoadingProgressBar.IsActive = false;
+                    LoadingProgressBar.Visibility = Visibility.Collapsed;
+                });
                 //ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
 
                 if (!IsSeted)
@@ -231,7 +244,7 @@ namespace freeRSS
                         sr1.Close();
                         ms1.Close();
                         doc1.Close();
-                        content = Encoding.Default.GetString(data1);
+                        content1 = Encoding.Default.GetString(data1);
                         ViewModel.CurrentArticle.Rtf = content1;
 
                         ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content1);

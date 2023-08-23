@@ -350,14 +350,14 @@ namespace freeRSS.ViewModels
             flivm.IconElement = new ImageIcon() { Source = feedViewModel._shortcutIcon };
             return flivm;
         }
-        public static explicit operator FeedsListItemViewModel(FeedViewModel feedViewModel)
-        {
-            var flivm = new FeedsListItemViewModel();
-            flivm.Title = feedViewModel._name;
-            flivm.SubTitle = feedViewModel._unreadNum.ToString();
-            flivm.IconElement = new ImageIcon() { Source = feedViewModel._shortcutIcon };
-            return flivm;
-        }
+        //public static explicit operator FeedsListItemViewModel(FeedViewModel feedViewModel)
+        //{
+        //    var flivm = new FeedsListItemViewModel();
+        //    flivm.Title = feedViewModel._name;
+        //    flivm.SubTitle = feedViewModel._unreadNum.ToString();
+        //    flivm.IconElement = new ImageIcon() { Source = feedViewModel._shortcutIcon };
+        //    return flivm;
+        //}
 
 
         private const string NOT_HTTP_MESSAGE = "Sorry. The URL must begin with http:// or https://";

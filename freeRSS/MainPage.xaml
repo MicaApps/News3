@@ -250,7 +250,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <muxc:NavigationView x:Name="FeedsList"
-                        MenuItemsSource="{x:Bind ViewModel.Feeds, Mode=OneWay}"
+                        MenuItemsSource="{x:Bind Items, Mode=OneWay}"
                         MenuItemTemplate="{StaticResource FeedsListItemTemplate}"
                         SelectionChanged="FeedsList_ItemClick"
                         Background="{ThemeResource SystemControlAcrylicWindowBrush}"
