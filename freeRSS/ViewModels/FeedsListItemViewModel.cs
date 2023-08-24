@@ -47,7 +47,7 @@ namespace freeRSS.ViewModels
         {
             return new FeedsListItemViewModel()
             {
-                Title = item.Content as string,
+                Title = (item.Content as TextBlock).Text,
                 SubTitle = "",
                 IconElement = item.Icon
             };
@@ -57,7 +57,7 @@ namespace freeRSS.ViewModels
         {
             return new FeedsListItemViewModel()
             {
-                Title = v.Content as string,
+                Title = (v.Content as TextBlock).Text,
                 SubTitle = "",
                 IconElement = v.Icon
             };
