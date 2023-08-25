@@ -180,52 +180,48 @@ namespace freeRSS
         {
             if (RSS_ArticleListView.SelectedIndex >= 0)
             {
-                ArticleWebView.Visibility = Visibility.Collapsed;
-                ArticleWebView.IsReadOnly = false;
+                //ArticleWebView.IsReadOnly = false;
                 LoadingProgressBar.Visibility = Visibility.Visible;
                 LoadingProgressBar.IsActive = true;
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
+                ArticleWebView.Source = ViewModel.CurrentArticle.Description;
                 // 得在这里改改
                 //
                 // by Elipese
                 // 2023/7/16
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    string content = "";
-                    if (ViewModel.CurrentArticle.Rtf == null)
-                    {
-                        Spire.Doc.Document doc = new Spire.Doc.Document();
-                        StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                        doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
-                        MemoryStream ms = new MemoryStream();
-                        doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
-                        byte[] data = ms.ToArray();
-                        sr.Close();
-                        ms.Close();
-                        doc.Close();
-                        content = Encoding.Default.GetString(data);
-                        ViewModel.CurrentArticle.Rtf = content;
-                    }
-                    else
-                    {
-                        content = ViewModel.CurrentArticle.Rtf;
-                    }
+                    //string content = "";
+                    //if (ViewModel.CurrentArticle.Rtf == null)
+                    //{
+                    //    Spire.Doc.Document doc = new Spire.Doc.Document();
+                    //    StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                    //    doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
+                    //    MemoryStream ms = new MemoryStream();
+                    //    doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
+                    //    byte[] data = ms.ToArray();
+                    //    sr.Close();
+                    //    ms.Close();
+                    //    doc.Close();
+                    //    content = Encoding.Default.GetString(data);
+                    //    ViewModel.CurrentArticle.Rtf = content;
+                    //}
+                    //else
+                    //{
+                    //    content = ViewModel.CurrentArticle.Rtf;
+                    //}
 
-                    ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
+                   // ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
                     ArticleWebView.Visibility = Visibility.Visible;
-                    ArticleWebView.IsReadOnly = true;
+                    //ArticleWebView.IsReadOnly = true;
                     LoadingProgressBar.IsActive = false;
                     LoadingProgressBar.Visibility = Visibility.Collapsed;
-                });
                 //ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
 
                 if (!IsSeted)
                 {
                     ActualThemeChanged += (a, b) =>
                     {
-                        ArticleWebView.Visibility = Visibility.Collapsed;
-                        ArticleWebView.IsReadOnly = false;
+                        //ArticleWebView.IsReadOnly = false;
                         LoadingProgressBar.Visibility = Visibility.Visible;
                         LoadingProgressBar.IsActive = true;
                         ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
@@ -234,22 +230,22 @@ namespace freeRSS
                         //
                         // by Elipese
                         // 2023/7/16
-                        string content1 = "";
-                        Spire.Doc.Document doc1 = new Spire.Doc.Document();
-                        StringReader sr1 = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                        doc1.LoadHTML(sr1, Spire.Doc.Documents.XHTMLValidationType.None);
-                        MemoryStream ms1 = new MemoryStream();
-                        doc1.SaveToStream(ms1, Spire.Doc.FileFormat.Rtf);
-                        byte[] data1 = ms1.ToArray();
-                        sr1.Close();
-                        ms1.Close();
-                        doc1.Close();
-                        content1 = Encoding.Default.GetString(data1);
-                        ViewModel.CurrentArticle.Rtf = content1;
+                        //string content1 = "";
+                        //Spire.Doc.Document doc1 = new Spire.Doc.Document();
+                        //StringReader sr1 = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                        //doc1.LoadHTML(sr1, Spire.Doc.Documents.XHTMLValidationType.None);
+                        //MemoryStream ms1 = new MemoryStream();
+                        //doc1.SaveToStream(ms1, Spire.Doc.FileFormat.Rtf);
+                        //byte[] data1 = ms1.ToArray();
+                        //sr1.Close();
+                        //ms1.Close();
+                        //doc1.Close();
+                        //content1 = Encoding.Default.GetString(data1);
+                        //ViewModel.CurrentArticle.Rtf = content1;
 
-                        ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content1);
+                        //ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content1);
                         ArticleWebView.Visibility = Visibility.Visible;
-                        ArticleWebView.IsReadOnly = true;
+                        //ArticleWebView.IsReadOnly = true;
                         LoadingProgressBar.IsActive = false;
                         LoadingProgressBar.Visibility = Visibility.Collapsed;
                     };

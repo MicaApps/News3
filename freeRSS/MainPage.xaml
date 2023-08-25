@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:was="using:AppStudio.Uwp.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -330,9 +331,9 @@
 
                             <TextBlock x:Name="RssTitle" FontSize="56" Foreground="{ThemeResource SystemControlPageBackgroundAltHighBrush}" Grid.Row="1" Text="{x:Bind ViewModel.CurrentArticle.FeedName}"></TextBlock>
 
-                            <RichEditBox x:Name="ArticleWebView"
-                                     Grid.Row="2"
-                                     ScrollViewer.VerticalScrollBarVisibility="Visible" />
+                            <was:HtmlBlock Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView">
+                                
+                            </was:HtmlBlock>
 
                             <Grid Grid.Row="3">
                                 <StackPanel Orientation="Horizontal">
