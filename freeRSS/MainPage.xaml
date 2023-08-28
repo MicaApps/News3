@@ -329,7 +329,7 @@
                                      Visibility="Collapsed" Foreground="#FF51CAF6"/>-->
                             <ProgressRing x:Name="LoadingProgressBar" Foreground="Red" Grid.Row="0" Width="20" Height="20" />
 
-                            <TextBlock x:Name="RssTitle" FontSize="56" Foreground="{ThemeResource SystemControlPageBackgroundAltHighBrush}" Grid.Row="1" Text="{x:Bind ViewModel.CurrentArticle.FeedName}"></TextBlock>
+
 
                             <ScrollViewer Grid.Row="2" >
                                 <Grid>
@@ -339,9 +339,13 @@
                                         <ColumnDefinition Width="10"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <was:HtmlBlock Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock x:Name="RssTitle" FontSize="56" Foreground="{ThemeResource SystemControlPageBackgroundAltHighBrush}" Grid.Row="1" Text="{x:Bind ViewModel.CurrentArticle.FeedName}"></TextBlock>
+                                        <was:HtmlBlock  ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
 
-                                    </was:HtmlBlock>
+                                        </was:HtmlBlock>
+                                    </StackPanel>
+                                    
 
                                 </Grid>
                                 
