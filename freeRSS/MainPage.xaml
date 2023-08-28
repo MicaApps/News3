@@ -348,7 +348,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock x:Name="RssTitle" FontSize="56" Foreground="{ThemeResource SystemControlPageBackgroundAltHighBrush}" Grid.Row="1" Text="{x:Bind ViewModel.CurrentArticle.FeedName}"></TextBlock>
+                                        <TextBlock x:Name="RssTitle" MaxWidth="700" Margin="0 20 0 40" FontSize="48" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title}"></TextBlock>
                                         <was:HtmlBlock  ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
 
                                         </was:HtmlBlock>
