@@ -107,8 +107,9 @@
                                TextTrimming="CharacterEllipsis"
                                Text="{x:Bind Title, Mode=OneWay}" 
                                Grid.Row="1"
-                               FontWeight="SemiBold"
+                               FontWeight="Bold"
                                Margin="0 0 0 10"
+                               
                                />
                     <TextBlock Text="{x:Bind Summary, Mode=OneWay}" 
                                Foreground="LightGray" 
@@ -310,7 +311,7 @@
                             </Grid>
 
                             <ListView x:Name="RSS_ArticleListView" 
-                                  Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                                  Background="Transparent"
                                   Grid.Row="2"   
                                   ItemTemplate="{StaticResource RSS_ArticleTemplate}"
                                   ItemsSource="{x:Bind ViewModel.CurrentFeed.Articles, Mode=OneWay}" 
@@ -323,7 +324,7 @@
                                 </ItemsControl.ItemContainerStyle>
                             </ListView>
                         </Grid>
-                        <Grid Grid.Column="1" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                        <Grid Grid.Column="1" HorizontalAlignment="Stretch" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
