@@ -243,7 +243,15 @@
                         />
             </Grid>
         </Grid>-->
-        <Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}"/>
+        <Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image Height="18" Margin="5" Source="Assets/StoreLogo.png" Stretch="Uniform" />
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="News" />
+        </Grid>
+        
         <ProgressBar Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" Visibility="{x:Bind ViewModel.CurrentFeed.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" Foreground="#FF51CAF6" />
         <!--FeedsList-->
         <Grid Grid.Row="2">
