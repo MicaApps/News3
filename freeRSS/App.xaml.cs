@@ -8,6 +8,8 @@ using freeRSS.Services;
 using Windows.UI.Notifications;
 using System.Xml;
 using System.IO;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
 
 namespace freeRSS
 {
@@ -24,6 +26,7 @@ namespace freeRSS
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
         }
 
         /// <summary>
@@ -40,6 +43,11 @@ namespace freeRSS
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
+
+
+            //延申内容区域到标题栏
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
 
             // 异步load数据库
             await SQLiteService.LoadDatabaseAsync();
