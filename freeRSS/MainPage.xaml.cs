@@ -37,6 +37,8 @@ namespace freeRSS
 
         private bool IsSeted = false;
 
+        private FeedsListItemViewModel _addbutton;
+
         public MainPage()
         {
             Current = this;
@@ -54,18 +56,15 @@ namespace freeRSS
                     FeedsList.SelectedItem = FeedsList.MenuItems.Count > 0 ? FeedsList.MenuItems[0] : null;
                     RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
 
-                    var addbutton = new NavigationViewItem();
-                    addbutton.Icon = new SymbolIcon(Symbol.Add);
-                    ToolTipService.SetToolTip(addbutton, "Add Subscription");
-                    addbutton.Tapped += AddFeedButton_Tapped;
-                    addbutton.Content = new TextBlock() { Text = "Add Subscription" };
+                    _addbutton = new FeedsListItemViewModel();
+                    _addbutton.IconElement = new SymbolIcon(Symbol.Add);
+                    _addbutton.Title = "Add Subscription";
                     var editbutton = new NavigationViewItem();
                     editbutton.Icon = new SymbolIcon(Symbol.Edit);
-                    ToolTipService.SetToolTip(addbutton, "Edit Subscription");
                     editbutton.Tapped += EditFeedButton_Tapped;
                     editbutton.Content = new TextBlock() { Text = "Edit Subscription" };
                     FooterItems.Add((FeedsListItemViewModel)editbutton);
-                    FooterItems.Add((FeedsListItemViewModel)addbutton);
+                    FooterItems.Add(_addbutton);
 
                     foreach(var v in ViewModel.Feeds)
                     {
@@ -150,8 +149,16 @@ namespace freeRSS
         /// <summary>
         /// 点击FeedListView里的Item
         /// </summary>
-        private void FeedsList_ItemClick(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs e)
+        private async void FeedsList_ItemClick(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs e)
         {
+
+            if (e.SelectedItem == _addbutton)
+            {
+                FeedSetDialog AddFeedDialog = new FeedSetDialog();
+                await AddFeedDialog.ShowAsync();
+                FeedsList.SelectedItem = null;
+            }
+
             try
             {
                 FeedsList.SelectedItem = null;
