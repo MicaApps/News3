@@ -12,8 +12,13 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <!--Feed template-->
-        <!--<DataTemplate x:Key="FeedsListItemTemplate"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="styles/style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--Feed template-->
+            <!--<DataTemplate x:Key="FeedsListItemTemplate"
                       x:DataType="viewmodels:FeedViewModel"
                       >
             <muxc:NavigationViewItem>
@@ -43,36 +48,36 @@
             </muxc:NavigationViewItem>
             
         </DataTemplate>-->
-        <DataTemplate x:Key="FeedsListItemTemplate"
+            <DataTemplate x:Key="FeedsListItemTemplate"
                       x:DataType="viewmodels:FeedsListItemViewModel">
-            <muxc:NavigationViewItem Icon="{x:Bind IconElement}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="Title"
+                <muxc:NavigationViewItem Icon="{x:Bind IconElement}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="Title"
                                VerticalAlignment="Center"  
                                Grid.Column="1" 
                                Text="{x:Bind Title, Mode=OneWay}" 
                                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
                                Margin="10,1,0,0" 
                                Height="20"/>
-                    <TextBlock Margin="11,1,0,0"
+                        <TextBlock Margin="11,1,0,0"
                                x:Name="Subtitle"
                                Text="{x:Bind SubTitle, Mode=OneWay}" 
                                Grid.Column="2" VerticalAlignment="Center" 
                                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" HorizontalAlignment="Center" 
                                Height="20" Width="24"/>
-                </StackPanel>
-            </muxc:NavigationViewItem>
-        </DataTemplate>
+                    </StackPanel>
+                </muxc:NavigationViewItem>
+            </DataTemplate>
 
-        <!--Article template-->
-        <DataTemplate x:Key="RSS_ArticleTemplate"
+            <!--Article template-->
+            <DataTemplate x:Key="RSS_ArticleTemplate"
                       x:DataType="models:ArticleModel" >
-            <Grid Margin="0,3,0,3" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid ToolTipService.ToolTip="Unread"
+                <Grid Margin="0,3,0,3" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid ToolTipService.ToolTip="Unread"
                       Grid.Column="0"
                       Width="20" 
                       Height="20"
@@ -81,28 +86,28 @@
                       VerticalAlignment="Top" 
                       CornerRadius="2" Margin="-5,10,6,0" 
                       Padding="0,1,0,0">
-                    <Image Width="17" Height="17" 
+                        <Image Width="17" Height="17" 
                            Source="{x:Bind FeedIconSource, Mode=OneWay}" 
                            HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
-                <Grid Grid.Column="1" Margin="0 5 10 5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{x:Bind FeedName, Mode=OneWay}" Grid.Row="0"
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="0 5 10 5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{x:Bind FeedName, Mode=OneWay}" Grid.Row="0"
                                Foreground="Gray"
                                FontSize="10"
                                Margin="0,5,0,0"/>
-                    <TextBlock Text="{x:Bind PubDate, Mode=OneWay, Converter={StaticResource StringToDateTimeConverter}}" 
+                        <TextBlock Text="{x:Bind PubDate, Mode=OneWay, Converter={StaticResource StringToDateTimeConverter}}" 
                                Grid.Row="0" 
                                Foreground="Gray" 
                                FontSize="10" 
                                UseLayoutRounding="True"
                                HorizontalAlignment="Right" 
                                Margin="110,0,0,0"/>
-                    <TextBlock TextWrapping="Wrap"
+                        <TextBlock TextWrapping="Wrap"
                                MaxLines="2"
                                TextTrimming="CharacterEllipsis"
                                Text="{x:Bind Title, Mode=OneWay}" 
@@ -111,7 +116,7 @@
                                Margin="0 0 0 10"
                                
                                />
-                    <TextBlock Text="{x:Bind Summary, Mode=OneWay}" 
+                        <TextBlock Text="{x:Bind Summary, Mode=OneWay}" 
                                Foreground="LightGray" 
                                Grid.Row="2" 
                                FontSize="11" 
@@ -120,9 +125,11 @@
                                MaxLines="3"
                                TextTrimming="CharacterEllipsis" 
                                />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </DataTemplate>
+            </DataTemplate>
+
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
@@ -170,7 +177,7 @@
         </VisualStateManager.VisualStateGroups>-->
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"></RowDefinition>
+            <RowDefinition Height="0"></RowDefinition>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -244,6 +251,9 @@
                         />
             </Grid>
         </Grid>-->
+
+
+        
         <Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -255,11 +265,12 @@
         
         <ProgressBar Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" Visibility="{x:Bind ViewModel.CurrentFeed.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" Foreground="#FF51CAF6" />
         <!--FeedsList-->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <muxc:NavigationView x:Name="FeedsList"
+            <muxc:NavigationView 
+                Style="{StaticResource NavigationViewStyle1}" x:Name="FeedsList"
                         MenuItemsSource="{x:Bind Items, Mode=OneWay}"
                         MenuItemTemplate="{StaticResource FeedsListItemTemplate}"
                         SelectionChanged="FeedsList_ItemClick"
@@ -271,6 +282,7 @@
                         IsPaneVisible="True"
                         SelectionFollowsFocus="Disabled"
                         FooterMenuItemsSource="{x:Bind FooterItems}"
+                        
                         >
                 <!--<muxc:NavigationView.FooterMenuItems>
                     <muxc:NavigationViewItem HorizontalAlignment="Stretch" Tapped="EditFeedButton_Tapped" Icon="Repair" ToolTipService.ToolTip="Edit Subscription" >
@@ -286,7 +298,7 @@
                     </StackPanel>
                 </muxc:NavigationView.PaneFooter>-->
                 <muxc:NavigationView.Content>
-                    <Grid>
+                    <Grid Margin="0 -28 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="320"/>
                             <ColumnDefinition Width="*" />
@@ -310,13 +322,18 @@
                                 <TextBlock  Text="No Article !" HorizontalAlignment="Center" Foreground="White"/>
                             </Grid>
 
+                            <CommandBar Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                                <AppBarButton Icon="Refresh" Width="40"/>
+                            </CommandBar>
                             <ListView x:Name="RSS_ArticleListView" 
-                                  Background="Transparent"
+                                  Background="{ThemeResource SystemControlAcrylicWindowBrush}"
                                   Grid.Row="2"   
                                   ItemTemplate="{StaticResource RSS_ArticleTemplate}"
                                   ItemsSource="{x:Bind ViewModel.CurrentFeed.Articles, Mode=OneWay}" 
                                   SelectionChanged="RSS_ArticleListView_SelectionChanged" 
-                                  Padding="5">
+                                  Padding="5"
+                                      
+                                      >
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
                                         <Setter Property="Margin" Value="0 2"/>
@@ -349,7 +366,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 20 0 40" FontSize="48" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
+                                        <TextBlock x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 80 0 40" FontSize="42" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
                                         <was:HtmlBlock  ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
 
                                         </was:HtmlBlock>
@@ -374,5 +391,17 @@
                 </muxc:NavigationView.Content>
             </muxc:NavigationView>
         </Grid>
+
+        <Grid Grid.Row="2" Width="220" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Height="18" Margin="5,0" Source="Assets/StoreLogo.png" Stretch="UniformToFill"/>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="News" />
+            </Grid>
+        </Grid>
+
     </Grid>
 </Page>
