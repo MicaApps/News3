@@ -44,6 +44,8 @@ namespace freeRSS
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
 
+
+            //延申内容区域到标题栏
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
