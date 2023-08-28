@@ -8,13 +8,13 @@
 
 	<Identity
 	  Publisher="CN=DiskTools Team"
-	  Version="0.0.0.0"  Name="49014Shompinice.42317376306EA"/>
+	  Version="0.0.0.0"   Name="AAAAAAA"/>
 
 	<mp:PhoneIdentity PhoneProductId="00000000-0000-0000-0000-000000000000" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
 	<Properties>
 		<DisplayName>freeRSS</DisplayName>
-		<PublisherDisplayName>Shompinice</PublisherDisplayName>
+		<PublisherDisplayName>AAAAAAa</PublisherDisplayName>
 		<Logo>Assets\StoreLogo.png</Logo>
 	</Properties>
 
