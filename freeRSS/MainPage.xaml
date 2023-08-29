@@ -301,6 +301,7 @@
                     <Grid Margin="0 -28 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="320"/>
+                            
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid Width="320" Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
@@ -340,6 +341,7 @@
                                 </ItemsControl.ItemContainerStyle>
                             </ListView>
                         </Grid>
+                        <Grid Grid.Column="0" Background="#10000000" Width="1" HorizontalAlignment="Right"/>
                         <Grid Grid.Column="1" HorizontalAlignment="Stretch" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -356,7 +358,7 @@
 
 
 
-                            <ScrollViewer Grid.Row="2" >
+                            <ScrollViewer Grid.Row="2" Margin="0 0 0 -12">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="10"/>
@@ -367,10 +369,8 @@
                                     <StackPanel Grid.Column="1">
                                         <TextBlock x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 80 0 40" FontSize="42" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
                                         <was:HtmlBlock  ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
-
                                         </was:HtmlBlock>
                                     </StackPanel>
-                                    
 
                                 </Grid>
                                 
