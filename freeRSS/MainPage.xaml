@@ -117,7 +117,7 @@
                                
                                />
                         <TextBlock Text="{x:Bind Summary, Mode=OneWay}" 
-                               Foreground="LightGray" 
+                               Foreground="{ThemeResource SystemControlPageBackgroundBaseMediumBrush}" 
                                Grid.Row="2" 
                                FontSize="11" 
                                Margin="0,0,0,5"
@@ -367,7 +367,7 @@
 
                                     <StackPanel Grid.Column="1">
                                         <TextBlock x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 80 0 40" FontSize="42" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
-                                        <was:HtmlBlock  ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
+                                        <was:HtmlBlock ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
 
                                         </was:HtmlBlock>
                                     </StackPanel>
