@@ -303,7 +303,7 @@
                             <ColumnDefinition Width="320"/>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid Width="320" Grid.Column="0">
+                        <Grid Width="320" Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -322,8 +322,9 @@
                                 <TextBlock  Text="No Article !" HorizontalAlignment="Center" Foreground="White"/>
                             </Grid>
 
-                            <CommandBar Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-                                <AppBarButton Icon="Refresh" Width="40"/>
+
+                            <CommandBar Margin="0 32 0 0" Background="{ThemeResource SystemControlAcrylicWindowBrush}" DefaultLabelPosition="Right">
+                                <AppBarButton Icon="Refresh" Label="Refresh" />
                             </CommandBar>
                             <ListView x:Name="RSS_ArticleListView" 
                                   Background="{ThemeResource SystemControlAcrylicWindowBrush}"
@@ -331,9 +332,7 @@
                                   ItemTemplate="{StaticResource RSS_ArticleTemplate}"
                                   ItemsSource="{x:Bind ViewModel.CurrentFeed.Articles, Mode=OneWay}" 
                                   SelectionChanged="RSS_ArticleListView_SelectionChanged" 
-                                  Padding="5"
-                                      
-                                      >
+                                  Padding="5">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
                                         <Setter Property="Margin" Value="0 2"/>
