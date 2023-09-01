@@ -348,6 +348,7 @@ namespace freeRSS.ViewModels
             flivm.Title = feedViewModel._name;
             flivm.SubTitle = feedViewModel._unreadNum.ToString();
             flivm.IconElement = new ImageIcon() { Source = feedViewModel._shortcutIcon };
+            flivm.InnerObject = feedViewModel;
             return flivm;
         }
         //public static explicit operator FeedsListItemViewModel(FeedViewModel feedViewModel)

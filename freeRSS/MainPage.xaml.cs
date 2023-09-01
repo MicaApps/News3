@@ -37,7 +37,10 @@ namespace freeRSS
 
         private bool IsSeted = false;
 
-        private FeedsListItemViewModel _addbutton;
+        private FeedsListItemViewModel _addbutton = new FeedsListItemViewModel();
+        private FeedsListItemViewModel _editbutton = new FeedsListItemViewModel();
+        private FeedsListItemViewModel _oldselected = new FeedsListItemViewModel();
+
 
         public MainPage()
         {
@@ -56,14 +59,11 @@ namespace freeRSS
                     FeedsList.SelectedItem = FeedsList.MenuItems.Count > 0 ? FeedsList.MenuItems[0] : null;
                     RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
 
-                    _addbutton = new FeedsListItemViewModel();
                     _addbutton.IconElement = new SymbolIcon(Symbol.Add);
                     _addbutton.Title = "Add Subscription";
-                    var editbutton = new NavigationViewItem();
-                    editbutton.Icon = new SymbolIcon(Symbol.Edit);
-                    editbutton.Tapped += EditFeedButton_Tapped;
-                    editbutton.Content = new TextBlock() { Text = "Edit Subscription" };
-                    FooterItems.Add((FeedsListItemViewModel)editbutton);
+                    _editbutton.IconElement = new SymbolIcon(Symbol.Edit);
+                    _editbutton.Title = "Edit Subscription";
+                    FooterItems.Add(_editbutton);
                     FooterItems.Add(_addbutton);
 
                     foreach(var v in ViewModel.Feeds)
@@ -156,16 +156,26 @@ namespace freeRSS
             {
                 FeedSetDialog AddFeedDialog = new FeedSetDialog();
                 await AddFeedDialog.ShowAsync();
-                FeedsList.SelectedItem = null;
+                FeedsList.SelectedItem = _oldselected;
             }
-
-            try
+            else if(e.SelectedItem == _editbutton)
             {
-                FeedsList.SelectedItem = null;
-                ViewModel.CurrentFeed = (FeedViewModel)e.SelectedItem;
-                RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
+                EditDialog editDialog = new EditDialog();
+                await editDialog.ShowAsync();
+                FeedsList.SelectedItem = _oldselected;
             }
-            catch { }
+            else
+            {
+                _oldselected = (FeedsListItemViewModel)FeedsList.SelectedItem;
+                try
+                {
+                    //FeedsList.SelectedItem = null;
+                    ViewModel.CurrentFeed = (FeedViewModel)((FeedsListItemViewModel)e.SelectedItem).InnerObject;
+                    RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
+                }
+                catch { }
+            }
+            
         }
 
         /// <summary>
@@ -192,33 +202,39 @@ namespace freeRSS
                 LoadingProgressBar.IsActive = true;
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
-                ArticleWebView.Source = ViewModel.CurrentArticle.Description;
+                ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + "<style>*{line-height: 25px;}</style>" + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                //AppStudio.Uwp.Controls.ParagraphStyle paragraphStyle = new AppStudio.Uwp.Controls.ParagraphStyle();
+                //paragraphStyle.Margin = new Thickness(0,0,0,10000);
+                //ArticleWebView.DocumentStyle.Span.Merge(paragraphStyle);
+                ////paragraphStyle.Reset(ArticleWebView);
+                ////ArticleWebView.DocumentStyle.P.Reset(ArticleWebView);
+                ////ArticleWebView.DocumentStyle.P.Merge(paragraphStyle);
                 // 得在这里改改
                 //
                 // by Elipese
                 // 2023/7/16
-                    //string content = "";
-                    //if (ViewModel.CurrentArticle.Rtf == null)
-                    //{
-                    //    Spire.Doc.Document doc = new Spire.Doc.Document();
-                    //    StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                    //    doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
-                    //    MemoryStream ms = new MemoryStream();
-                    //    doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
-                    //    byte[] data = ms.ToArray();
-                    //    sr.Close();
-                    //    ms.Close();
-                    //    doc.Close();
-                    //    content = Encoding.Default.GetString(data);
-                    //    ViewModel.CurrentArticle.Rtf = content;
-                    //}
-                    //else
-                    //{
-                    //    content = ViewModel.CurrentArticle.Rtf;
-                    //}
+                //string content = "";
+                //if (ViewModel.CurrentArticle.Rtf == null)
+                //{
+                //    Spire.Doc.Document doc = new Spire.Doc.Document();
+                //    StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                //    doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
+                //    MemoryStream ms = new MemoryStream();
+                //    doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
+                //    byte[] data = ms.ToArray();
+                //    sr.Close();
+                //    ms.Close();
+                //    doc.Close();
+                //    content = Encoding.Default.GetString(data);
+                //    ViewModel.CurrentArticle.Rtf = content;
+                //}
+                //else
+                //{
+                //    content = ViewModel.CurrentArticle.Rtf;
+                //}
 
-                   // ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
-                    ArticleWebView.Visibility = Visibility.Visible;
+                // ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
+                ArticleWebView.Visibility = Visibility.Visible;
                     //ArticleWebView.IsReadOnly = true;
                     LoadingProgressBar.IsActive = false;
                     LoadingProgressBar.Visibility = Visibility.Collapsed;

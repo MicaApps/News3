@@ -332,7 +332,6 @@
                                   ItemsSource="{x:Bind ViewModel.CurrentFeed.Articles, Mode=OneWay}" 
                                   SelectionChanged="RSS_ArticleListView_SelectionChanged" 
                                   Padding="5"
-                                      
                                       >
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
@@ -357,7 +356,7 @@
 
 
 
-                            <ScrollViewer Grid.Row="2" >
+                            <!--<ScrollViewer Grid.Row="2" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="10"/>
@@ -365,18 +364,16 @@
                                         <ColumnDefinition Width="10"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 80 0 40" FontSize="42" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
-                                        <was:HtmlBlock ScrollViewer.VerticalScrollBarVisibility="Visible" Name="ArticleWebView" MaxWidth="700" FontSize="18" >
-
-                                        </was:HtmlBlock>
-                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">-->
+                                        <TextBlock Grid.Row="1" x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 80 0 40" FontSize="42" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
+                                        <WebView HorizontalAlignment="Stretch" Grid.Row="2" Name="ArticleWebView" Visibility="Visible" MaxWidth="700" />
+                                    <!--</StackPanel>
                                     
 
                                 </Grid>
                                 
                                 
-                            </ScrollViewer>
+                            </ScrollViewer>-->
                             
 
                             <Grid Grid.Row="3">
@@ -402,6 +399,5 @@
                 <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="News" />
             </Grid>
         </Grid>
-
     </Grid>
 </Page>
