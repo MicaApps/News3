@@ -301,9 +301,10 @@
                     <Grid Margin="0 -28 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="320"/>
+                            
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid Width="320" Grid.Column="0">
+                        <Grid Width="320" Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -322,8 +323,9 @@
                                 <TextBlock  Text="No Article !" HorizontalAlignment="Center" Foreground="White"/>
                             </Grid>
 
-                            <CommandBar Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-                                <AppBarButton Icon="Refresh" Width="40"/>
+
+                            <CommandBar Margin="0 32 0 0" Background="{ThemeResource SystemControlAcrylicWindowBrush}" DefaultLabelPosition="Right">
+                                <AppBarButton Icon="Refresh" Label="Refresh" />
                             </CommandBar>
                             <ListView x:Name="RSS_ArticleListView" 
                                   Background="{ThemeResource SystemControlAcrylicWindowBrush}"
@@ -340,6 +342,7 @@
                                 </ItemsControl.ItemContainerStyle>
                             </ListView>
                         </Grid>
+                        <Grid Grid.Column="0" Background="#10000000" Width="1" HorizontalAlignment="Right"/>
                         <Grid Grid.Column="1" HorizontalAlignment="Stretch" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
