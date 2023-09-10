@@ -16,11 +16,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="styles/style.xaml" />
             </ResourceDictionary.MergedDictionaries>
-<<<<<<< HEAD
-            
-            <DataTemplate x:Key="FeedsListItemTemplate"
-                      x:DataType="viewmodels:FeedsListItemViewModel">
-=======
 
             <!--  Feed template  -->
             <!--<DataTemplate x:Key="FeedsListItemTemplate"
@@ -54,7 +49,6 @@
 
         </DataTemplate>-->
             <DataTemplate x:Key="FeedsListItemTemplate" x:DataType="viewmodels:FeedsListItemViewModel">
->>>>>>> ff57594550576e34db001e3d9eb29c3b87cb7818
                 <muxc:NavigationViewItem Icon="{x:Bind IconElement}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -149,14 +143,54 @@
     </Page.Resources>
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <!--<VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.DisplayMode"
+                                Value="CompactInline" />
+                        <Setter Target="RootSplitView.IsPaneOpen"
+                                Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.DisplayMode"
+                                Value="CompactOverlay" />
+                        <Setter Target="RootSplitView.IsPaneOpen"
+                                Value="False" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.DisplayMode"
+                                Value="Overlay" />
+                        <Setter Target="RootSplitView.IsPaneOpen"
+                                Value="False" />
+                        <Setter Target="columnLeftBar.Width"
+                                Value="0"/>
+                        <Setter Target="sayingText.Text"
+                                Value="0"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>-->
+
         <Grid.RowDefinitions>
             <RowDefinition Height="0" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
-<<<<<<< HEAD
-        
-=======
 
         <!--<Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}" Height="32">
             自定义标题栏控件
@@ -230,7 +264,6 @@
 
 
 
->>>>>>> ff57594550576e34db001e3d9eb29c3b87cb7818
         <Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -259,23 +292,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-<<<<<<< HEAD
-            <muxc:NavigationView 
-                Style="{StaticResource NavigationViewStyle1}" x:Name="FeedsList"
-                        MenuItemsSource="{x:Bind Items, Mode=OneWay}"
-                        MenuItemTemplate="{StaticResource FeedsListItemTemplate}"
-                        SelectionChanged="FeedsList_ItemClick"
-                        Background="{ThemeResource SystemControlAcrylicWindowBrush}"
-                        Grid.Column="0"
-                        IsSettingsVisible="False"
-                        PaneDisplayMode="Left"
-                        OpenPaneLength="250"
-                        IsPaneVisible="True"
-                        SelectionFollowsFocus="Disabled"
-                        FooterMenuItemsSource="{x:Bind FooterItems}"
-                        
-                        >
-=======
             <muxc:NavigationView
                 x:Name="FeedsList"
                 Grid.Column="0"
@@ -303,7 +319,6 @@
 
                     </StackPanel>
                 </muxc:NavigationView.PaneFooter>-->
->>>>>>> ff57594550576e34db001e3d9eb29c3b87cb7818
                 <muxc:NavigationView.Content>
                     <Grid Margin="0,-28,0,0">
                         <Grid.ColumnDefinitions>
@@ -395,7 +410,7 @@
 
 
 
-                            <ScrollViewer Grid.Row="1" >
+                            <!--<ScrollViewer Grid.Row="2" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="10"/>
@@ -403,19 +418,6 @@
                                         <ColumnDefinition Width="10"/>
                                     </Grid.ColumnDefinitions>
 
-<<<<<<< HEAD
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Grid.Row="1" x:Name="RssTitle" TextWrapping="Wrap" MaxWidth="700" Margin="0 80 0 40" FontSize="42" FontWeight="Bold" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind ViewModel.CurrentArticle.Title,Mode=OneWay}"></TextBlock>
-                                        <WebView HorizontalAlignment="Stretch" Grid.Row="2" Name="ArticleWebView" Visibility="Visible" MaxWidth="700" />
-                                    </StackPanel>
-                                    
-
-                                </Grid>
-                                
-                                
-                            </ScrollViewer>
-                            
-=======
                                     <StackPanel Grid.Column="1">-->
                             <ScrollViewer Grid.Row="2">
                                 <StackPanel>
@@ -468,7 +470,6 @@
 
                             </ScrollViewer>-->
 
->>>>>>> ff57594550576e34db001e3d9eb29c3b87cb7818
 
                             <Grid Grid.Row="3">
                                 <StackPanel Orientation="Horizontal">
