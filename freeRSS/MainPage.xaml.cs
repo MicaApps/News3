@@ -202,7 +202,7 @@ namespace freeRSS
                 LoadingProgressBar.IsActive = true;
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
-                ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + "<style>*{line-height: 25px;}</style>" + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
                 //AppStudio.Uwp.Controls.ParagraphStyle paragraphStyle = new AppStudio.Uwp.Controls.ParagraphStyle();
                 //paragraphStyle.Margin = new Thickness(0,0,0,10000);
                 //ArticleWebView.DocumentStyle.Span.Merge(paragraphStyle);
