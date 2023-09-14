@@ -6,22 +6,48 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    Background="Transparent">
     <Grid>
         <Grid.RowDefinitions>
             <!-- Title Row -->
-            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+        
+            <TextBlock Grid.Row="0"
+           Text="Settings"
+           Margin="16,16,0,0"
+           FontSize="24"
+           FontFamily="Bold"/>
 
-        <TextBlock Grid.Row="0"
-                   Text="Settings"
-                   Margin="16,16,0,0"
-                   FontSize="24"
-                   FontFamily="Bold"/>
+        <StackPanel Grid.Row="1" Margin="20" Spacing="10">
+            
+       
+            <labs:SettingsExpander 
+                x:Name="settingsCard" 
+                   Description="The SettingsExpander has the same properties as a Card, and you can set SettingsCard as part of the Items collection."
+                   Header="SettingsExpander"
+                VerticalAlignment="Top">
 
-        <TextBlock Grid.Row="1"
-                   Text="test text"
-                   Margin="16,0,0,0"/>
+                
+                <labs:SettingsExpander.HeaderIcon>
+                    <FontIcon Glyph="&#xE91B;" />
+                </labs:SettingsExpander.HeaderIcon>
+
+            </labs:SettingsExpander>
+
+            <TextBlock Text="About" FontWeight="Bold" FontSize="16"/>
+
+            <StackPanel>
+                <TextBlock Text="News 1.0.0"/>
+                <TextBlock Text="© 2023 云母工艺。All rights received."/>
+            </StackPanel>
+           
+            <Button Content="Send Feedback"/>
+
+        </StackPanel>
+
     </Grid>
 </Page>
