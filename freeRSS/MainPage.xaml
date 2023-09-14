@@ -276,13 +276,12 @@
                         SelectionChanged="FeedsList_ItemClick"
                         Background="{ThemeResource SystemControlAcrylicWindowBrush}"
                         Grid.Column="0"
-                        IsSettingsVisible="False"
+                        IsSettingsVisible="True"
                         PaneDisplayMode="Left"
                         OpenPaneLength="250"
                         IsPaneVisible="True"
                         SelectionFollowsFocus="Disabled"
                         FooterMenuItemsSource="{x:Bind FooterItems}"
-                        
                         >
                 <!--<muxc:NavigationView.FooterMenuItems>
                     <muxc:NavigationViewItem HorizontalAlignment="Stretch" Tapped="EditFeedButton_Tapped" Icon="Repair" ToolTipService.ToolTip="Edit Subscription" >

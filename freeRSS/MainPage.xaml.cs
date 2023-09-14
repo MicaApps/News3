@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Documents;
 using System.Text;
 using Windows.Foundation;
 using System.Collections.ObjectModel;
+using freeRSS.Pages;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -38,6 +39,13 @@ namespace freeRSS
         private bool IsSeted = false;
 
         private FeedsListItemViewModel _addbutton;
+
+        /// <summary>
+        /// The initial content of <see cref="FeedsList"/>.
+        /// <para>The content of <see cref="FeedsList"/> will be replaced with the Settings page
+        /// when switching to the Settings page, and restored to this cached content when switching to another page</para>
+        /// </summary>
+        private readonly object cachedContent;
 
         public MainPage()
         {
@@ -79,6 +87,8 @@ namespace freeRSS
             setWebView();
             //自适应监控窗口变化
             //this.SizeChanged += MainPage_SizeChanged;
+
+            cachedContent = FeedsList.Content;
         }
 
         private void setWebView()
@@ -151,6 +161,15 @@ namespace freeRSS
         /// </summary>
         private async void FeedsList_ItemClick(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs e)
         {
+            if (e.IsSettingsSelected)
+            {
+                sender.Content = new SettingsPage();
+                return;
+            }
+            else
+            {
+                sender.Content = cachedContent;
+            }
 
             if (e.SelectedItem == _addbutton)
             {
