@@ -19,5 +19,9 @@
                    Margin="16,16,0,0"
                    FontSize="24"
                    FontFamily="Bold"/>
+
+        <TextBlock Grid.Row="1"
+                   Text="test text"
+                   Margin="16,0,0,0"/>
     </Grid>
 </Page>
