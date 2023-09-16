@@ -21,6 +21,13 @@ using Windows.UI.Xaml.Documents;
 using System.Text;
 using Windows.Foundation;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media;
+using Windows.Media.Devices;
+using Windows.UI.WebUI;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
+using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Controls.Primitives;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -202,7 +209,52 @@ namespace freeRSS
                 LoadingProgressBar.IsActive = true;
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
-                ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
+                //
+                string css_string = "";
+                //double DefaultFontSize = 12;
+                string Background_color = "transparent";// (App.Current.RequestedTheme == ApplicationTheme.Dark) ? "white" : "black";
+                string Font_color = "black";
+                string Font_family = "Microsoft Yahei,PingFang SC,HanHei SC,Arial";
+                string html = $@"<!DOCTYPE html>
+<html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+    <meta charset=""utf-8"" />
+    <title></title>
+
+
+    <style>
+        p{{
+        }}
+        .content {{
+            word - wrap: break-word;
+            white-space: pre-wrap;
+            padding:0 20px;text-indent:2em;line-height:1.15;
+            background-color: {Background_color};
+            color: {Font_color};
+            font-family: {Font_family};
+        }}
+        img {{
+width:100%;
+            max-width: 820px;
+        }}
+    </style>
+    <style>
+{css_string}
+    </style>
+</head>
+<body id=""_body"" class=""content"">
+<h1>{ViewModel.CurrentArticle.Title}</h1>
+    {ViewModel.CurrentArticle.Description}
+</body>
+</html>";
+                ArticleWebView.NavigateToString(html);
+                
+                //ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
+
+
+
+                //Debug.WriteLine(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
+                
                 //AppStudio.Uwp.Controls.ParagraphStyle paragraphStyle = new AppStudio.Uwp.Controls.ParagraphStyle();
                 //paragraphStyle.Margin = new Thickness(0,0,0,10000);
                 //ArticleWebView.DocumentStyle.Span.Merge(paragraphStyle);
@@ -306,6 +358,37 @@ namespace freeRSS
                 await ViewModel.CurrentFeed.RefreshAsync();
                 UpdateTile.UpDateTile(ViewModel.CurrentFeed.NewestArticles);
             }
+        }
+
+        double lineHeight = 20;
+        private async void LineHeightBtnClick(object sender, RoutedEventArgs e)
+        {
+            var flag= (sender as RepeatButton).Tag.ToString();
+            switch (flag)
+            {
+                case "bigger":
+                    lineHeight += .5;
+                    lineHeight = Math.Clamp(lineHeight, 10, 200);
+                    //await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.styleSheets[0].insertRule(""p{{line-height: {lineHeight}px;}}"")" });
+
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{lineHeight}px\"" });
+
+
+
+
+                    break;
+                case "smaller":
+                    lineHeight -= .5;
+                    lineHeight = Math.Clamp(lineHeight, 10, 200);
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{lineHeight}px\"" });
+               
+                    break;
+                default:
+                    break;
+            }
+
+
+
         }
     }
 }

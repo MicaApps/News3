@@ -17,37 +17,7 @@
                 <ResourceDictionary Source="styles/style.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--  Feed template  -->
-            <!--<DataTemplate x:Key="FeedsListItemTemplate"
-                      x:DataType="viewmodels:FeedViewModel"
-                      >
-            <muxc:NavigationViewItem>
-                <muxc:NavigationViewItem.Icon>
-                    <IconSourceElement x:Name="ShortcutIcon"
-                               Width="17"
-                               Height="17"
-                               IconSource="{x:Bind ShortcutIcon, Mode=OneWay}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
-                </muxc:NavigationViewItem.Icon>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="feedName"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Text="{x:Bind Name, Mode=OneWay}"
-                               Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                               Margin="10,1,0,0"
-                               Height="20"/>
-                    <TextBlock Margin="11,1,0,0"
-                               x:Name="UnreadNum"
-                               Text="{x:Bind UnreadNum, Mode=OneWay}"
-                               Grid.Column="2" VerticalAlignment="Center"
-                               Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" HorizontalAlignment="Center"
-                               Height="20" Width="24"/>
-                </StackPanel>
-            </muxc:NavigationViewItem>
-
-        </DataTemplate>-->
+       
             <DataTemplate x:Key="FeedsListItemTemplate" x:DataType="viewmodels:FeedsListItemViewModel">
                 <muxc:NavigationViewItem Icon="{x:Bind IconElement}">
                     <StackPanel Orientation="Horizontal">
@@ -143,124 +113,12 @@
     </Page.Resources>
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <!--<VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RootSplitView.DisplayMode"
-                                Value="CompactInline" />
-                        <Setter Target="RootSplitView.IsPaneOpen"
-                                Value="True" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RootSplitView.DisplayMode"
-                                Value="CompactOverlay" />
-                        <Setter Target="RootSplitView.IsPaneOpen"
-                                Value="False" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RootSplitView.DisplayMode"
-                                Value="Overlay" />
-                        <Setter Target="RootSplitView.IsPaneOpen"
-                                Value="False" />
-                        <Setter Target="columnLeftBar.Width"
-                                Value="0"/>
-                        <Setter Target="sayingText.Text"
-                                Value="0"/>
-
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>-->
-
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="0" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="6*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <!--<Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}" Height="32">
-            自定义标题栏控件
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition x:Name="columnLeftBar" Width="250"></ColumnDefinition>
-                <ColumnDefinition x:Name="columnRightBar" Width="*" ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="PaneOpenTrigger"
-                    Grid.Column="0"
-                    Style="{StaticResource myTitleButton}"
-                    Content="&#xE700;"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    HorizontalAlignment="Left"
-                    Width="48" Height="32"
-                    Foreground="White" Margin="0,0,0,-1"
-                    VerticalAlignment="Bottom"
-                    Click="PaneOpenTrigger_Click"/>
-            <Grid Grid.Column="1">
-                <TextBlock Text="News"
-                           x:Name="sayingText"
-                           VerticalAlignment="Center" FontSize="12" FontFamily="Segoe UI"
-                           FontWeight="Normal" Margin="10,0" Foreground="White"/>
-                <Button
-                     x:Name="buttonSync" Content="&#xE117;" FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                     HorizontalAlignment="Right"
-                     Style="{StaticResource myTitleButton}"
-                     Click="buttonSync_Click"
-                     Width="48" Height="32" Foreground="White" Background="#33000000"></Button>
-            </Grid>
-
-            <Grid Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-
-                this button in the 1.0 have no need
-                <Button Grid.Column="0"
-                        Visibility="Collapsed"
-                        Content="&#xE112;" FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                        Width="48" Height="32" Foreground="White" Style="{StaticResource myTitleButton}"
-                        />
-
-                <Rectangle Grid.Column="1"
-                    x:Name="GridTitleBar" Fill="#00000000"/>
-
-                空心：&#xE1CE;;  实心： &#xE249;
-                <ToggleButton Grid.Column="2"
-                              x:Name="StarredToggleButton"
-                              ToolTipService.ToolTip="Favorite"
-                              Content="&#xE1CE;" FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                              FontSize="14"
-                              IsChecked="{x:Bind ViewModel.CurrentArticle.IsStarred, Mode=TwoWay, Converter={StaticResource BooleanToNullableConverter}}"
-                              Width="48" Height="32" Foreground="White"
-                              Visibility="{x:Bind ViewModel.CurrentFeed.IsNotEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                              Style="{StaticResource topBar_ToggleButtonStyle}"
-                        />
-                <Button x:Name="ShareButton" Grid.Column="3"
-                        ToolTipService.ToolTip="Share"
-                        Content="&#xE72D;" FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                        Width="48" Height="32" Foreground="White"
-                        Style="{StaticResource myTitleButton}"
-                        VerticalAlignment="Bottom" Click="ShareButton_Click"
-                        Margin="0,0,170,0"
-                        />
-            </Grid>
-        </Grid>-->
 
 
 
@@ -306,19 +164,7 @@
                 SelectionChanged="FeedsList_ItemClick"
                 SelectionFollowsFocus="Disabled"
                 Style="{StaticResource NavigationViewStyle1}">
-                <!--<muxc:NavigationView.FooterMenuItems>
-                    <muxc:NavigationViewItem HorizontalAlignment="Stretch" Tapped="EditFeedButton_Tapped" Icon="Repair" ToolTipService.ToolTip="Edit Subscription" >
-                        <TextBlock>Edit Subscription</TextBlock>
-                    </muxc:NavigationViewItem>
-                    <muxc:NavigationViewItem HorizontalAlignment="Stretch" Tapped="AddFeedButton_Tapped" Icon="Add" ToolTipService.ToolTip="Add Subscription">
-                        <TextBlock>Add Subscription</TextBlock>
-                    </muxc:NavigationViewItem>
-                </muxc:NavigationView.FooterMenuItems>
-                    <muxc:NavigationView.PaneFooter>
-                    <StackPanel HorizontalAlignment="Stretch">
-
-                    </StackPanel>
-                </muxc:NavigationView.PaneFooter>-->
+   
                 <muxc:NavigationView.Content>
                     <Grid Margin="0,-28,0,0">
                         <Grid.ColumnDefinitions>
@@ -387,20 +233,16 @@
                             HorizontalAlignment="Right"
                             Background="#10000000" />
                         <Grid
-                            Grid.Column="1"
+                            Grid.Column="1" 
                             HorizontalAlignment="Stretch"
                             Background="Transparent">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="30" />
+                       
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <!--<ProgressBar x:Name="LoadingProgressBar"
-                                     Height="10"
-                                     IsIndeterminate="True"
-                                     Grid.Row="0"
-                                     Visibility="Collapsed" Foreground="#FF51CAF6"/>-->
+
                             <ProgressRing
                                 x:Name="LoadingProgressBar"
                                 Grid.Row="0"
@@ -409,69 +251,36 @@
                                 Foreground="Red" />
 
 
+                            <Grid Grid.Row="1">
+                             
+                                <WebView Name="ArticleWebView" 
+                           HorizontalAlignment="Stretch"
+                           DefaultBackgroundColor="Transparent"
+                           Source="https://www.cnblogs.com/ms-uap/p/4798269.html"
+                           />
+        
+                                <StackPanel Padding="20 5" Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
 
-                            <!--<ScrollViewer Grid.Row="2" >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="10"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="10"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel Grid.Column="1">-->
-                            <ScrollViewer Grid.Row="2">
-                                <StackPanel>
-                                    <TextBlock
-                                        x:Name="RssTitle"
-                                        Grid.Row="1"
-                                        MaxWidth="700"
-                                        Margin="0,80,0,40"
-                                        FontSize="42"
-                                        FontWeight="Bold"
-                                        Foreground="{ThemeResource AppBarItemForegroundThemeBrush}"
-                                        Text="{x:Bind ViewModel.CurrentArticle.Title, Mode=OneWay}"
-                                        TextWrapping="Wrap" />
-                                    <WebView
-                                        Name="ArticleWebView"
-                                        Grid.Row="2"
-                                        Height="5000"
-                                        MaxWidth="800"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        DefaultBackgroundColor="Transparent"
-                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                        ScrollViewer.VerticalScrollMode="Disabled"
-                                        Source="https://www.cnblogs.com/ms-uap/p/4798269.html"
-                                        Visibility="Visible" />
+                                    <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick" Tag="bigger">
+                                        <RepeatButton.Content>
+                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E8;" />
+                                        </RepeatButton.Content>
+                    
+                                    </RepeatButton>
+                                    <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick"  Tag="smaller">
+                                        <RepeatButton.Content>
+                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E7;" />
+                                        </RepeatButton.Content>
+                                    </RepeatButton>
                                 </StackPanel>
-
-                            </ScrollViewer>
-                            <!--<TextBlock
-                                x:Name="RssTitle"
-                                Grid.Row="1"
-                                MaxWidth="700"
-                                Margin="0,80,0,40"
-                                FontSize="42"
-                                FontWeight="Bold"
-                                Foreground="{ThemeResource AppBarItemForegroundThemeBrush}"
-                                Text="{x:Bind ViewModel.CurrentArticle.Title, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-                            <WebView
-                                Name="ArticleWebView"
-                                Grid.Row="2"
-                                MaxWidth="700"
-                                HorizontalAlignment="Stretch"
-                                Visibility="Visible" />-->
-                            <!--</StackPanel>
+                            </Grid>
 
 
-                                </Grid>
 
 
-                            </ScrollViewer>-->
 
 
-                            <Grid Grid.Row="3">
+                            <Grid Grid.Row="2">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="10,0,0,0"
@@ -492,8 +301,8 @@
             </muxc:NavigationView>
         </Grid>
 
-        <Grid
-            Grid.Row="2"
+        <!--<Grid
+            Grid.Row="2" Visibility="Collapsed"
             Width="220"
             Height="32"
             HorizontalAlignment="Left"
@@ -513,6 +322,6 @@
                     VerticalAlignment="Center"
                     Text="News" />
             </Grid>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>
