@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="freeRSS.View.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:freeRSS.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <Button Tag="back" Click="Button_Click" Margin="50 50 50 50" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Content>
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0A6;" />
+            </Button.Content>
+        </Button>
+
+        <Button  Margin="150 50 50 50" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Content>
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE115;" />
+            </Button.Content>
+        </Button>
+        
+    </Grid>
+</Page>

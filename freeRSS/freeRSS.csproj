@@ -129,6 +129,7 @@
     <Compile Include="Common\HtmlConvertToRtfHelper.cs" />
     <Compile Include="Common\UpdateTile.cs" />
     <Compile Include="Common\WebIconSaveTool.cs" />
+    <Compile Include="Helper\Settings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -146,6 +147,9 @@
     </Compile>
     <Compile Include="View\FeedSetDialog.xaml.cs">
       <DependentUpon>FeedSetDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FeedSetDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

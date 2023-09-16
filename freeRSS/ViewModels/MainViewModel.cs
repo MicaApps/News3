@@ -15,6 +15,7 @@ namespace freeRSS.ViewModels
 {
     public class MainViewModel : BindableBase
     {
+
         public FeedViewModel StarredFeed { get; private set; }
         public FeedViewModel CurrentFeed
         {

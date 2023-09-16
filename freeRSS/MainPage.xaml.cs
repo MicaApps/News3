@@ -21,6 +21,15 @@ using Windows.UI.Xaml.Documents;
 using System.Text;
 using Windows.Foundation;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media;
+using Windows.Media.Devices;
+using Windows.UI.WebUI;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
+using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Controls.Primitives;
+using System.Runtime.CompilerServices;
+using freeRSS.Helper;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -39,8 +48,15 @@ namespace freeRSS
 
         private FeedsListItemViewModel _addbutton = new FeedsListItemViewModel();
         private FeedsListItemViewModel _editbutton = new FeedsListItemViewModel();
+
+        private FeedsListItemViewModel _settingbutton = new FeedsListItemViewModel();
+
         private FeedsListItemViewModel _oldselected = new FeedsListItemViewModel();
 
+        //一些私有字段
+        string Font_color = "black";
+
+        //
 
         public MainPage()
         {
@@ -61,90 +77,49 @@ namespace freeRSS
 
                     _addbutton.IconElement = new SymbolIcon(Symbol.Add);
                     _addbutton.Title = "Add Subscription";
+
                     _editbutton.IconElement = new SymbolIcon(Symbol.Edit);
                     _editbutton.Title = "Edit Subscription";
+
+                    _settingbutton.IconElement = new SymbolIcon(Symbol.Setting);
+                    _settingbutton.Title = "设置";
+
                     FooterItems.Add(_editbutton);
                     FooterItems.Add(_addbutton);
+                    FooterItems.Add(_settingbutton);
 
-                    foreach(var v in ViewModel.Feeds)
+
+                    foreach (var v in ViewModel.Feeds)
                     {
                         Items.Add(v);
                     }
                 }
                 catch { }
+
+
+                //检测系统主题
+                switch (App.Current.RequestedTheme)
+                {
+                    case ApplicationTheme.Light:
+                        Font_color = "black";
+                        break;
+                    case ApplicationTheme.Dark:
+                        Font_color = "white";
+                        break;
+                    default:
+                        break;
+                }
             };
             
             this.InitializeComponent();
-            //设置顶部UI
-            setWebView();
-            //自适应监控窗口变化
-            //this.SizeChanged += MainPage_SizeChanged;
+         
+
+
+            //获取主题颜色
         }
 
-        private void setWebView()
-        {/*
-            ArticleWebView.ContentLoading += (s, e) =>
-             {
-                 LoadingProgressBar.Visibility = Visibility.Visible;
-             };
-            ArticleWebView.LoadCompleted += (s, e) =>
-            {
-                ArticleWebView.Visibility = Visibility.Visible;
-                LoadingProgressBar.Visibility = Visibility.Collapsed;
-            };*/
-        }
-
-        /// <summary>
-        /// 设置自定义标题栏控件
-        /// </summary>
-        private void setTitleUI()
-        {
-            /*var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            //Window.Current.SetTitleBar(GridTitleBar); 
-            /*var view = ApplicationView.GetForCurrentView();
-            view.TitleBar.BackgroundColor = Color.FromArgb(255, 37, 37, 37);
-            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 37, 37, 37);
-            view.TitleBar.ButtonForegroundColor = Colors.White;
-
-            // inactive
-            view.TitleBar.InactiveBackgroundColor = Color.FromArgb(255, 37, 37, 37);
-            view.TitleBar.InactiveForegroundColor = Colors.Gray;
-            view.TitleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            view.TitleBar.ButtonInactiveBackgroundColor = Color.FromArgb(255, 37, 37, 37);*/
-
-        }
-
-        /// <summary>
-        /// 控制导航栏的开闭
-        /// </summary>
-        /*
-        private void PaneOpenTrigger_Click(object sender, RoutedEventArgs e)
-        {
-            RootSplitView.IsPaneOpen = RootSplitView.IsPaneOpen ? false : true;
-        }*/
 
 
-        /// <summary>
-        /// 新建一个Subscribtion
-        /// </summary>
-        private async void AddFeedButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            FeedSetDialog AddFeedDialog = new FeedSetDialog();
-            await AddFeedDialog.ShowAsync();
-            FeedsList.SelectedItem = null;
-        }
-
-        /// <summary>
-        /// 新建一个Subscribtion
-        /// </summary>
-        private async void EditFeedButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            EditDialog EditFeedDialog = new EditDialog();
-            await EditFeedDialog.ShowAsync();
-            FeedsList.SelectedItem = null;   
-        }
 
         /// <summary>
         /// 点击FeedListView里的Item
@@ -163,6 +138,11 @@ namespace freeRSS
                 EditDialog editDialog = new EditDialog();
                 await editDialog.ShowAsync();
                 FeedsList.SelectedItem = _oldselected;
+            }
+            else if (e.SelectedItem == _settingbutton)
+            {
+
+                Frame.Navigate(typeof(SettingPage),null);
             }
             else
             {
@@ -193,7 +173,7 @@ namespace freeRSS
             return default;
         }
 
-        private async void SelectionChangedAsync()
+        private void SelectionChangedAsync()
         {
             if (RSS_ArticleListView.SelectedIndex >= 0)
             {
@@ -202,44 +182,52 @@ namespace freeRSS
                 LoadingProgressBar.IsActive = true;
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
-                ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
-                //AppStudio.Uwp.Controls.ParagraphStyle paragraphStyle = new AppStudio.Uwp.Controls.ParagraphStyle();
-                //paragraphStyle.Margin = new Thickness(0,0,0,10000);
-                //ArticleWebView.DocumentStyle.Span.Merge(paragraphStyle);
-                ////paragraphStyle.Reset(ArticleWebView);
-                ////ArticleWebView.DocumentStyle.P.Reset(ArticleWebView);
-                ////ArticleWebView.DocumentStyle.P.Merge(paragraphStyle);
-                // 得在这里改改
                 //
-                // by Elipese
-                // 2023/7/16
-                //string content = "";
-                //if (ViewModel.CurrentArticle.Rtf == null)
-                //{
-                //    Spire.Doc.Document doc = new Spire.Doc.Document();
-                //    StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                //    doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
-                //    MemoryStream ms = new MemoryStream();
-                //    doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
-                //    byte[] data = ms.ToArray();
-                //    sr.Close();
-                //    ms.Close();
-                //    doc.Close();
-                //    content = Encoding.Default.GetString(data);
-                //    ViewModel.CurrentArticle.Rtf = content;
-                //}
-                //else
-                //{
-                //    content = ViewModel.CurrentArticle.Rtf;
-                //}
-
-                // ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
+                string css_string = "";
+                //double DefaultFontSize = 12;
+                string Background_color = "transparent";// (App.Current.RequestedTheme == ApplicationTheme.Dark) ? "white" : "black";
+               
+                string Font_family = "Microsoft Yahei,PingFang SC,HanHei SC,Arial";
+                string html = $@"<!DOCTYPE html>
+<html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+    <meta charset=""utf-8"" />
+    <title></title>
+    <style>
+        p{{
+           line-height:{LineHeight}px;
+        }}
+        .content {{
+            word - wrap: break-word;
+            white-space: pre-wrap;
+            padding:0 20px;text-indent:2em;line-height:1.15;font-size:{ContentFontSize}px;
+            background-color: {Background_color};
+            color: {Font_color};
+            font-family: {Font_family};
+        }}
+        img {{
+width:100%;
+            max-width: 820px;
+        }}
+    </style>
+    <style>
+{css_string}
+    </style>
+</head>
+<body id=""_body"" class=""content"">
+<h1>{ViewModel.CurrentArticle.Title}</h1>
+    {ViewModel.CurrentArticle.Description}
+</body>
+</html>";
+                ArticleWebView.NavigateToString(html);
+                
+                
                 ArticleWebView.Visibility = Visibility.Visible;
-                    //ArticleWebView.IsReadOnly = true;
-                    LoadingProgressBar.IsActive = false;
-                    LoadingProgressBar.Visibility = Visibility.Collapsed;
-                //ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
 
+                    
+                LoadingProgressBar.IsActive = false;
+                LoadingProgressBar.Visibility = Visibility.Collapsed;
+      
                 if (!IsSeted)
                 {
                     ActualThemeChanged += (a, b) =>
@@ -249,22 +237,7 @@ namespace freeRSS
                         LoadingProgressBar.IsActive = true;
                         ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                         ViewModel.CurrentArticle.UnRead = false;
-                        // 得在这里改改
-                        //
-                        // by Elipese
-                        // 2023/7/16
-                        //string content1 = "";
-                        //Spire.Doc.Document doc1 = new Spire.Doc.Document();
-                        //StringReader sr1 = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                        //doc1.LoadHTML(sr1, Spire.Doc.Documents.XHTMLValidationType.None);
-                        //MemoryStream ms1 = new MemoryStream();
-                        //doc1.SaveToStream(ms1, Spire.Doc.FileFormat.Rtf);
-                        //byte[] data1 = ms1.ToArray();
-                        //sr1.Close();
-                        //ms1.Close();
-                        //doc1.Close();
-                        //content1 = Encoding.Default.GetString(data1);
-                        //ViewModel.CurrentArticle.Rtf = content1;
+                        
 
                         //ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content1);
                         ArticleWebView.Visibility = Visibility.Visible;
@@ -307,5 +280,100 @@ namespace freeRSS
                 UpdateTile.UpDateTile(ViewModel.CurrentFeed.NewestArticles);
             }
         }
+
+
+        private async void LineHeightBtnClick(object sender, RoutedEventArgs e)
+        {
+            var flag= (sender as RepeatButton).Tag.ToString();
+            switch (flag)
+            {
+                case "bigger":
+                    LineHeight += .5;
+                    LineHeight = Math.Clamp(LineHeight, 10, 200);
+                    //await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.styleSheets[0].insertRule(""p{{line-height: {lineHeight}px;}}"")" });
+
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{LineHeight}px\"" });
+                    break;
+                case "smaller":
+                    LineHeight -= .5;
+                    LineHeight = Math.Clamp(LineHeight, 10, 200);
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{LineHeight}px\"" });
+               
+                    break;
+                default:
+                    break;
+            }
+
+
+
+        }
+
+        private async void FeedsList_ActualThemeChanged(FrameworkElement sender, object args)
+        {
+            switch (App.Current.RequestedTheme)
+            {
+                case ApplicationTheme.Light:
+
+
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.body.style.color = 'black';" });
+                    Font_color = "black";
+
+                    break;
+                case ApplicationTheme.Dark:
+
+
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.body.style.color = 'white';" });
+                    Font_color = "white";
+
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+
+
+
+
+
+    public sealed partial class MainPage : INotifyPropertyChanged
+    {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public double LineHeight
+        {
+            get { 
+                return UserSetting.ReadSetting<double>(UserSetting.GetCallerPropertyName(),40);
+            }
+            set {
+                UserSetting.WriteSetting(UserSetting.GetCallerPropertyName(), value);
+                OnPropertyChanged(); 
+            
+            }
+        }
+        public double ContentFontSize
+        {
+            get
+            {
+                return UserSetting.ReadSetting<double>(UserSetting.GetCallerPropertyName(), 18);
+            }
+            set
+            {
+                UserSetting.WriteSetting(UserSetting.GetCallerPropertyName(), value);
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+
     }
 }
