@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:freeRSS"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:freeRSS.Models"
+    xmlns:models="using:freeRSS.Models" NavigationCacheMode="Required"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:viewmodels="using:freeRSS.ViewModels"
     xmlns:was="using:AppStudio.Uwp.Controls"
@@ -151,11 +151,11 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <muxc:NavigationView
-                x:Name="FeedsList" ActualThemeChanged="FeedsList_ActualThemeChanged"
+                x:Name="FeedsList"
                 Grid.Column="0"
                 Background="{ThemeResource SystemControlAcrylicWindowBrush}"
-                FooterMenuItemsSource="{x:Bind FooterItems}"
-                IsPaneVisible="True" IsPaneOpen="False" IsBackButtonVisible="Collapsed"
+                FooterMenuItemsSource="{x:Bind FooterItems}" IsBackEnabled="True" BackRequested="FeedsList_BackRequested"
+                IsPaneVisible="True" IsPaneOpen="False" IsBackButtonVisible="Visible"
                 IsSettingsVisible="False"
                 MenuItemTemplate="{StaticResource FeedsListItemTemplate}"
                 MenuItemsSource="{x:Bind Items, Mode=OneWay}"
@@ -258,32 +258,10 @@
                                 Height="20"
                                 Foreground="Red" />
 
-<!--webview-->
-                            <Grid Grid.Row="1">
-                             
-                                <WebView Name="ArticleWebView" 
-                           HorizontalAlignment="Stretch"
-                           DefaultBackgroundColor="Transparent"
-                           Source="https://www.cnblogs.com/ms-uap/p/4798269.html"
-                           />
-        
-                                <StackPanel Padding="20 5" Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
 
-                                    <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick" Tag="bigger">
-                                        <RepeatButton.Content>
-                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E8;" />
-                                        </RepeatButton.Content>
-                    
-                                    </RepeatButton>
-                                    <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick"  Tag="smaller">
-                                        <RepeatButton.Content>
-                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E7;" />
-                                        </RepeatButton.Content>
-                                    </RepeatButton>
-                                </StackPanel>
-                            </Grid>
-
-
+                            <Frame x:Name="myframe" Grid.Row="1">
+                                
+                            </Frame>
 
 
 

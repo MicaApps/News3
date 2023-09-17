@@ -25,9 +25,10 @@ namespace freeRSS.View
             this.InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //myframe.Navigate(typeof(SettingPage), null);
+        //    //Frame.Navigate(typeof(MainPage));
+        //}
     }
 }

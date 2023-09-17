@@ -10,11 +10,11 @@
 
     <Grid>
 
-        <Button Tag="back" Click="Button_Click" Margin="50 50 50 50" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!--<Button Tag="back" Click="Button_Click" Margin="50 50 50 50" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Button.Content>
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0A6;" />
             </Button.Content>
-        </Button>
+        </Button>-->
 
         <Button  Margin="150 50 50 50" Style="{StaticResource TextBlockButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Button.Content>

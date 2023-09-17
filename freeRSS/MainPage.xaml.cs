@@ -30,6 +30,7 @@ using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Controls.Primitives;
 using System.Runtime.CompilerServices;
 using freeRSS.Helper;
+using Windows.UI.Xaml.Navigation;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -53,10 +54,7 @@ namespace freeRSS
 
         private FeedsListItemViewModel _oldselected = new FeedsListItemViewModel();
 
-        //一些私有字段
-        string Font_color = "black";
 
-        //
 
         public MainPage()
         {
@@ -64,6 +62,9 @@ namespace freeRSS
             // get view model
             this.Loaded += async (sender, args) =>
             {
+
+                myframe.Navigate(typeof(WebViewPage));
+
                 try
                 {
                     //viewModel 初始化
@@ -97,18 +98,7 @@ namespace freeRSS
                 catch { }
 
 
-                //检测系统主题
-                switch (App.Current.RequestedTheme)
-                {
-                    case ApplicationTheme.Light:
-                        Font_color = "black";
-                        break;
-                    case ApplicationTheme.Dark:
-                        Font_color = "white";
-                        break;
-                    default:
-                        break;
-                }
+
             };
             
             this.InitializeComponent();
@@ -117,7 +107,10 @@ namespace freeRSS
 
             //获取主题颜色
         }
-
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);  
+        //}
 
 
 
@@ -141,8 +134,9 @@ namespace freeRSS
             }
             else if (e.SelectedItem == _settingbutton)
             {
-
-                Frame.Navigate(typeof(SettingPage),null);
+                Debug.WriteLine("go to setting page");
+                myframe.Navigate(typeof(SettingPage),null);
+                FeedsList.SelectedItem = _oldselected;
             }
             else
             {
@@ -183,47 +177,12 @@ namespace freeRSS
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
                 //
-                string css_string = "";
-                //double DefaultFontSize = 12;
-                string Background_color = "transparent";// (App.Current.RequestedTheme == ApplicationTheme.Dark) ? "white" : "black";
-               
-                string Font_family = "Microsoft Yahei,PingFang SC,HanHei SC,Arial";
-                string html = $@"<!DOCTYPE html>
-<html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
-<head>
-    <meta charset=""utf-8"" />
-    <title></title>
-    <style>
-        p{{
-           line-height:{LineHeight}px;
-        }}
-        .content {{
-            word - wrap: break-word;
-            white-space: pre-wrap;
-            padding:0 20px;text-indent:2em;line-height:1.15;font-size:{ContentFontSize}px;
-            background-color: {Background_color};
-            color: {Font_color};
-            font-family: {Font_family};
-        }}
-        img {{
-width:100%;
-            max-width: 820px;
-        }}
-    </style>
-    <style>
-{css_string}
-    </style>
-</head>
-<body id=""_body"" class=""content"">
-<h1>{ViewModel.CurrentArticle.Title}</h1>
-    {ViewModel.CurrentArticle.Description}
-</body>
-</html>";
-                ArticleWebView.NavigateToString(html);
-                
-                
-                ArticleWebView.Visibility = Visibility.Visible;
 
+
+                WebViewPage.Instance.CurrentArticle = ViewModel.CurrentArticle;
+
+
+                //
                     
                 LoadingProgressBar.IsActive = false;
                 LoadingProgressBar.Visibility = Visibility.Collapsed;
@@ -240,7 +199,7 @@ width:100%;
                         
 
                         //ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content1);
-                        ArticleWebView.Visibility = Visibility.Visible;
+                        //ArticleWebView.Visibility = Visibility.Visible;
                         //ArticleWebView.IsReadOnly = true;
                         LoadingProgressBar.IsActive = false;
                         LoadingProgressBar.Visibility = Visibility.Collapsed;
@@ -281,56 +240,13 @@ width:100%;
             }
         }
 
-
-
-        private async void LineHeightBtnClick(object sender, RoutedEventArgs e)
+        private void FeedsList_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
-            var flag= (sender as RepeatButton).Tag.ToString();
-            switch (flag)
+            if (myframe.CanGoBack)
             {
-                case "bigger":
-                    LineHeight += .5;
-                    LineHeight = Math.Clamp(LineHeight, 10, 200);
-                    //await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.styleSheets[0].insertRule(""p{{line-height: {lineHeight}px;}}"")" });
-
-                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{LineHeight}px\"" });
-                    break;
-                case "smaller":
-                    LineHeight -= .5;
-                    LineHeight = Math.Clamp(LineHeight, 10, 200);
-                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{LineHeight}px\"" });
-               
-                    break;
-                default:
-                    break;
+                myframe.GoBack();
             }
-
-
-
-        }
-
-        private async void FeedsList_ActualThemeChanged(FrameworkElement sender, object args)
-        {
-            switch (App.Current.RequestedTheme)
-            {
-                case ApplicationTheme.Light:
-
-
-                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.body.style.color = 'black';" });
-                    Font_color = "black";
-
-                    break;
-                case ApplicationTheme.Dark:
-
-
-                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.body.style.color = 'white';" });
-                    Font_color = "white";
-
-                    break;
-                default:
-                    break;
-            }
-
+            
         }
     }
 
