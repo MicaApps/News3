@@ -204,10 +204,13 @@ namespace freeRSS
             background-color: {Background_color};
             color: {Font_color};
             font-family: {Font_family};
+            max-width: 720px;
+            margin-left: auto;
+    margin-right: auto;
         }}
         img {{
 width:100%;
-            max-width: 820px;
+            max-width: 720px;
         }}
     </style>
     <style>
