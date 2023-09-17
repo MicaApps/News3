@@ -281,6 +281,37 @@ width:100%;
             }
         }
 
+        double lineHeight = 20;
+        private async void LineHeightBtnClick(object sender, RoutedEventArgs e)
+        {
+            var flag= (sender as RepeatButton).Tag.ToString();
+            switch (flag)
+            {
+                case "bigger":
+                    lineHeight += .5;
+                    lineHeight = Math.Clamp(lineHeight, 10, 200);
+                    //await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $@"document.styleSheets[0].insertRule(""p{{line-height: {lineHeight}px;}}"")" });
+
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{lineHeight}px\"" });
+
+
+
+
+                    break;
+                case "smaller":
+                    lineHeight -= .5;
+                    lineHeight = Math.Clamp(lineHeight, 10, 200);
+                    await ArticleWebView?.InvokeScriptAsync("eval", new string[] { $"document.styleSheets[0].cssRules.item(0).style.lineHeight=\"{lineHeight}px\"" });
+               
+                    break;
+                default:
+                    break;
+            }
+
+
+
+        }
+
 
         private async void LineHeightBtnClick(object sender, RoutedEventArgs e)
         {
