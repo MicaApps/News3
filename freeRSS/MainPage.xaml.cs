@@ -192,7 +192,9 @@ namespace freeRSS
 <html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
 <head>
     <meta charset=""utf-8"" />
-    <title></title>
+    <title>
+
+</title>
     <style>
         p{{
            line-height:{LineHeight}px;
@@ -200,7 +202,7 @@ namespace freeRSS
         .content {{
             word - wrap: break-word;
             white-space: pre-wrap;
-            padding:0 20px;text-indent:2em;line-height:1.15;font-size:{ContentFontSize}px;
+            padding:0 20px;line-height:1.15;font-size:{ContentFontSize}px;
             background-color: {Background_color};
             color: {Font_color};
             font-family: {Font_family};
@@ -208,16 +210,19 @@ namespace freeRSS
             margin-left: auto;
     margin-right: auto;
         }}
+
         img {{
 width:100%;
             max-width: 720px;
         }}
+
     </style>
     <style>
 {css_string}
     </style>
 </head>
 <body id=""_body"" class=""content"">
+</style>
 <h1>{ViewModel.CurrentArticle.Title}</h1>
     {ViewModel.CurrentArticle.Description}
 </body>
