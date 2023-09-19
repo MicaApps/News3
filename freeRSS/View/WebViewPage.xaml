@@ -11,7 +11,9 @@
 
     <Grid>
 
-        <WebView Name="ArticleWebView" HorizontalAlignment="Stretch" DefaultBackgroundColor="Transparent"/>
+        <WebView Name="ArticleWebView" HorizontalAlignment="Stretch" DefaultBackgroundColor="Transparent" Margin="0 0 0 -12 ">
+            
+        </WebView>
 
         <StackPanel Padding="20 5" Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
 

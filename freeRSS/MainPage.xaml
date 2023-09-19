@@ -237,9 +237,11 @@
                             Width="1"
                             HorizontalAlignment="Right"
                             Background="#10000000" />
-                        
-                        
-                        
+
+
+                        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}" Grid.Column="1"/>
+                        <Grid Background="#07ffffff" Grid.Column="1"/>
+
                         <Grid
                             Grid.Column="1" 
                             HorizontalAlignment="Stretch"
@@ -251,12 +253,15 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
 
+                            
+
                             <ProgressRing
                                 x:Name="LoadingProgressBar"
                                 Grid.Row="0"
                                 Width="20"
                                 Height="20"
                                 Foreground="Red" />
+                            
 
 
                             <Frame x:Name="myframe" Grid.Row="1">
