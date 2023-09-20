@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="News.View.WebViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:News.View" NavigationCacheMode="Required"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+
+    <Grid>
+
+        <WebView Name="ArticleWebView" HorizontalAlignment="Stretch" DefaultBackgroundColor="Transparent" Margin="0 0 0 -12 ">
+            
+        </WebView>
+
+        <StackPanel Padding="20 5" Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+            <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick" Tag="bigger">
+                <RepeatButton.Content>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E8;" />
+                </RepeatButton.Content>
+
+            </RepeatButton>
+            <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick"  Tag="smaller">
+                <RepeatButton.Content>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E7;" />
+                </RepeatButton.Content>
+            </RepeatButton>
+        </StackPanel>
+    </Grid>
+
+</Page>
