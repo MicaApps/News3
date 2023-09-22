@@ -11,24 +11,31 @@
 
     <Grid>
 
-        <WebView Name="ArticleWebView" HorizontalAlignment="Stretch" DefaultBackgroundColor="Transparent" Margin="0 0 0 -12 ">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <CommandBar>
+                <AppBarButton Click="LineHeightBtnClick" Tag="bigger" Width="40">
+                    <AppBarButton.Content>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E8;" />
+                    </AppBarButton.Content>
+
+                </AppBarButton>
+                <AppBarButton Click="LineHeightBtnClick"  Tag="smaller" Width="40">
+                    <AppBarButton.Content>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E7;" />
+                    </AppBarButton.Content>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>    
+        <WebView Name="ArticleWebView" Grid.Row="1" HorizontalAlignment="Stretch" DefaultBackgroundColor="Transparent" Margin="0 0 0 -12 ">
             
         </WebView>
 
-        <StackPanel Padding="20 5" Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-
-            <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick" Tag="bigger">
-                <RepeatButton.Content>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E8;" />
-                </RepeatButton.Content>
-
-            </RepeatButton>
-            <RepeatButton Width="50" Height="50" Click="LineHeightBtnClick"  Tag="smaller">
-                <RepeatButton.Content>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE8E7;" />
-                </RepeatButton.Content>
-            </RepeatButton>
-        </StackPanel>
+  
     </Grid>
 
 </Page>
