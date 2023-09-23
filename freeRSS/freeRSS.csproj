@@ -129,6 +129,12 @@
     <Compile Include="Common\HtmlConvertToRtfHelper.cs" />
     <Compile Include="Common\UpdateTile.cs" />
     <Compile Include="Common\WebIconSaveTool.cs" />
+    <Compile Include="Controls\AppAuthor.xaml.cs">
+      <DependentUpon>AppAuthor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LabIcon.xaml.cs">
+      <DependentUpon>LabIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\Settings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -230,6 +236,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\AppAuthor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LabIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

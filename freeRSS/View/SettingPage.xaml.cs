@@ -1,10 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Labs.WinUI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,5 +32,15 @@ namespace freeRSS.View
         //    //myframe.Navigate(typeof(SettingPage), null);
         //    //Frame.Navigate(typeof(MainPage));
         //}
+        private void SettingsExpander_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            AuthorScrollViewer.Width = (sender as SettingsExpander).ActualWidth - 115;
+        }
+        private async void Uri_Click(object sender, RoutedEventArgs e)
+        {
+            var uri = new Uri((sender as SettingsCard).Tag.ToString());
+            await Launcher.LaunchUriAsync(uri);
+        }
     }
+
 }

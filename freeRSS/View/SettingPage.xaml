@@ -6,9 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:cols="using:freeRSS.Controls"
     Background="Transparent"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
->
+    xmlns:controls="using:freeRSS.Controls">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -48,7 +49,100 @@
             </StackPanel>
 
             <Button Content="Send Feedback"/>
+            <labs:SettingsExpander
+    Description="© 2023-2023 MicaApps. All rights reserved."
+    Header="freeRSS"
+    SizeChanged="SettingsExpander_SizeChanged">
+                <labs:SettingsExpander.HeaderIcon>
+                    <BitmapIcon ShowAsMonochrome="False" UriSource="ms-appx:///Assets/Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+                </labs:SettingsExpander.HeaderIcon>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock
+            x:Name="Version"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}" />
+                </StackPanel>
+                <labs:SettingsExpander.Items>
+                    <labs:SettingsCard
+            x:Name="BugRequestCard"
+            Click="Uri_Click"
+            Header="BUG反馈"
+            IsClickEnabled="True"
+            Tag="https://github.com/MicaApps/EdgeEx/issues">
+                        <labs:SettingsCard.ActionIcon>
+                            <FontIcon Glyph="&#xE8A7;" />
+                        </labs:SettingsCard.ActionIcon>
+                    </labs:SettingsCard>
+                    <labs:SettingsCard
+            HorizontalContentAlignment="Left"
+            ContentAlignment="Vertical"
+            Header="制作团队">
+                        <ScrollViewer
+                x:Name="AuthorScrollViewer"
+                Padding="0,0,0,5"
+                HorizontalScrollBarVisibility="Visible"
+                HorizontalScrollMode="Enabled"
+                VerticalScrollBarVisibility="Hidden"
+                VerticalScrollMode="Disabled">
+                            <StackPanel Orientation="Vertical" Spacing="5">
+                                <StackPanel
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        Spacing="5">
+                                    <controls:AppAuthor
+                            Title="MicaCraft"
+                            Description="组织"
+                            IsCircle="False"
+                            NavigateUri="https://github.com/MicaCraft"
+                            Thumb="ms-appx:///Assets/Authors/MicaCraft.png" />
+                                    <controls:AppAuthor
+                            Title="MicaApps"
+                            Description="组织"
+                            IsCircle="False"
+                            NavigateUri="https://github.com/MicaApps"
+                            Thumb="ms-appx:///Assets/Authors/MicaApps.png" />
+                                </StackPanel>
+                                <StackPanel
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        Spacing="5">
+                                    <cols:AppAuthor
+                            Title="HO-COOH"
+                            Description="CEF"
+                            IsCircle="True"
+                            NavigateUri="https://github.com/HO-COOH"
+                            Thumb="ms-appx:///Assets/Authors/HO-COOH.jpg" />
+                                    <cols:AppAuthor
+                            Title="kitUIN"
+                            Description="UI代码"
+                            IsCircle="True"
+                            NavigateUri="https://github.com/kitUIN"
+                            Thumb="ms-appx:///Assets/Authors/kitUIN.jpg" />
+                                    <cols:AppAuthor
+                            Title="Shomnipotence"
+                            Description="UI"
+                            IsCircle="True"
+                            NavigateUri="https://github.com/Shomnipotence"
+                            Thumb="ms-appx:///Assets/Authors/Shomnipotence.jpg" />
+                                </StackPanel>
+                            </StackPanel>
 
+                        </ScrollViewer>
+                    </labs:SettingsCard>
+                    <labs:SettingsCard
+            HorizontalContentAlignment="Left"
+            ContentAlignment="Vertical"
+            Header="依赖">
+                        <StackPanel Orientation="Vertical">
+                            <HyperlinkButton Content="Windows UI Library" NavigateUri="https://aka.ms/winui" />
+                            <HyperlinkButton Content="Windows Community Toolkit" NavigateUri="https://github.com/CommunityToolkit/dotnet" />
+                            <HyperlinkButton Content="Serilog" NavigateUri="https://github.com/serilog/serilog" />
+                        </StackPanel>
+                    </labs:SettingsCard>
+                </labs:SettingsExpander.Items>
+            </labs:SettingsExpander>
         </StackPanel>
 
     </Grid>
