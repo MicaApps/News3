@@ -21,6 +21,16 @@ using Windows.UI.Xaml.Documents;
 using System.Text;
 using Windows.Foundation;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media;
+using Windows.Media.Devices;
+using Windows.UI.WebUI;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
+using Windows.UI.Xaml.Shapes;
+using Windows.UI.Xaml.Controls.Primitives;
+using System.Runtime.CompilerServices;
+using freeRSS.Helper;
+using Windows.UI.Xaml.Navigation;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -37,7 +47,14 @@ namespace freeRSS
 
         private bool IsSeted = false;
 
-        private FeedsListItemViewModel _addbutton;
+        private FeedsListItemViewModel _addbutton = new FeedsListItemViewModel();
+        private FeedsListItemViewModel _editbutton = new FeedsListItemViewModel();
+
+        private FeedsListItemViewModel _settingbutton = new FeedsListItemViewModel();
+
+        private FeedsListItemViewModel _oldselected = new FeedsListItemViewModel();
+
+
 
         public MainPage()
         {
@@ -45,6 +62,9 @@ namespace freeRSS
             // get view model
             this.Loaded += async (sender, args) =>
             {
+
+                myframe.Navigate(typeof(WebViewPage));
+
                 try
                 {
                     //viewModel 初始化
@@ -56,95 +76,43 @@ namespace freeRSS
                     FeedsList.SelectedItem = FeedsList.MenuItems.Count > 0 ? FeedsList.MenuItems[0] : null;
                     RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
 
-                    _addbutton = new FeedsListItemViewModel();
                     _addbutton.IconElement = new SymbolIcon(Symbol.Add);
                     _addbutton.Title = "Add Subscription";
-                    var editbutton = new NavigationViewItem();
-                    editbutton.Icon = new SymbolIcon(Symbol.Edit);
-                    editbutton.Tapped += EditFeedButton_Tapped;
-                    editbutton.Content = new TextBlock() { Text = "Edit Subscription" };
-                    FooterItems.Add((FeedsListItemViewModel)editbutton);
-                    FooterItems.Add(_addbutton);
 
-                    foreach(var v in ViewModel.Feeds)
+                    _editbutton.IconElement = new SymbolIcon(Symbol.Edit);
+                    _editbutton.Title = "Edit Subscription";
+
+                    _settingbutton.IconElement = new SymbolIcon(Symbol.Setting);
+                    _settingbutton.Title = "设置";
+
+                    FooterItems.Add(_editbutton);
+                    FooterItems.Add(_addbutton);
+                    FooterItems.Add(_settingbutton);
+
+
+                    foreach (var v in ViewModel.Feeds)
                     {
                         Items.Add(v);
                     }
                 }
                 catch { }
+
+
+
             };
             
             this.InitializeComponent();
-            //设置顶部UI
-            setWebView();
-            //自适应监控窗口变化
-            //this.SizeChanged += MainPage_SizeChanged;
+         
+
+
+            //获取主题颜色
         }
-
-        private void setWebView()
-        {/*
-            ArticleWebView.ContentLoading += (s, e) =>
-             {
-                 LoadingProgressBar.Visibility = Visibility.Visible;
-             };
-            ArticleWebView.LoadCompleted += (s, e) =>
-            {
-                ArticleWebView.Visibility = Visibility.Visible;
-                LoadingProgressBar.Visibility = Visibility.Collapsed;
-            };*/
-        }
-
-        /// <summary>
-        /// 设置自定义标题栏控件
-        /// </summary>
-        private void setTitleUI()
-        {
-            /*var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            //Window.Current.SetTitleBar(GridTitleBar); 
-            /*var view = ApplicationView.GetForCurrentView();
-            view.TitleBar.BackgroundColor = Color.FromArgb(255, 37, 37, 37);
-            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 37, 37, 37);
-            view.TitleBar.ButtonForegroundColor = Colors.White;
-
-            // inactive
-            view.TitleBar.InactiveBackgroundColor = Color.FromArgb(255, 37, 37, 37);
-            view.TitleBar.InactiveForegroundColor = Colors.Gray;
-            view.TitleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            view.TitleBar.ButtonInactiveBackgroundColor = Color.FromArgb(255, 37, 37, 37);*/
-
-        }
-
-        /// <summary>
-        /// 控制导航栏的开闭
-        /// </summary>
-        /*
-        private void PaneOpenTrigger_Click(object sender, RoutedEventArgs e)
-        {
-            RootSplitView.IsPaneOpen = RootSplitView.IsPaneOpen ? false : true;
-        }*/
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);  
+        //}
 
 
-        /// <summary>
-        /// 新建一个Subscribtion
-        /// </summary>
-        private async void AddFeedButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            FeedSetDialog AddFeedDialog = new FeedSetDialog();
-            await AddFeedDialog.ShowAsync();
-            FeedsList.SelectedItem = null;
-        }
-
-        /// <summary>
-        /// 新建一个Subscribtion
-        /// </summary>
-        private async void EditFeedButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            EditDialog EditFeedDialog = new EditDialog();
-            await EditFeedDialog.ShowAsync();
-            FeedsList.SelectedItem = null;   
-        }
 
         /// <summary>
         /// 点击FeedListView里的Item
@@ -156,16 +124,32 @@ namespace freeRSS
             {
                 FeedSetDialog AddFeedDialog = new FeedSetDialog();
                 await AddFeedDialog.ShowAsync();
-                FeedsList.SelectedItem = null;
+                FeedsList.SelectedItem = _oldselected;
             }
-
-            try
+            else if(e.SelectedItem == _editbutton)
             {
-                FeedsList.SelectedItem = null;
-                ViewModel.CurrentFeed = (FeedViewModel)e.SelectedItem;
-                RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
+                EditDialog editDialog = new EditDialog();
+                await editDialog.ShowAsync();
+                FeedsList.SelectedItem = _oldselected;
             }
-            catch { }
+            else if (e.SelectedItem == _settingbutton)
+            {
+                Debug.WriteLine("go to setting page");
+                myframe.Navigate(typeof(SettingPage),null);
+                FeedsList.SelectedItem = _oldselected;
+            }
+            else
+            {
+                _oldselected = (FeedsListItemViewModel)FeedsList.SelectedItem;
+                try
+                {
+                    //FeedsList.SelectedItem = null;
+                    ViewModel.CurrentFeed = (FeedViewModel)((FeedsListItemViewModel)e.SelectedItem).InnerObject;
+                    RSS_ArticleListView.SelectedIndex = RSS_ArticleListView.Items.Count > 0 ? 0 : -1;
+                }
+                catch { }
+            }
+            
         }
 
         /// <summary>
@@ -183,7 +167,7 @@ namespace freeRSS
             return default;
         }
 
-        private async void SelectionChangedAsync()
+        private void SelectionChangedAsync()
         {
             if (RSS_ArticleListView.SelectedIndex >= 0)
             {
@@ -192,38 +176,17 @@ namespace freeRSS
                 LoadingProgressBar.IsActive = true;
                 ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                 ViewModel.CurrentArticle.UnRead = false;
-                ArticleWebView.Source = ViewModel.CurrentArticle.Description;
-                // 得在这里改改
                 //
-                // by Elipese
-                // 2023/7/16
-                    //string content = "";
-                    //if (ViewModel.CurrentArticle.Rtf == null)
-                    //{
-                    //    Spire.Doc.Document doc = new Spire.Doc.Document();
-                    //    StringReader sr = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                    //    doc.LoadHTML(sr, Spire.Doc.Documents.XHTMLValidationType.None);
-                    //    MemoryStream ms = new MemoryStream();
-                    //    doc.SaveToStream(ms, Spire.Doc.FileFormat.Rtf);
-                    //    byte[] data = ms.ToArray();
-                    //    sr.Close();
-                    //    ms.Close();
-                    //    doc.Close();
-                    //    content = Encoding.Default.GetString(data);
-                    //    ViewModel.CurrentArticle.Rtf = content;
-                    //}
-                    //else
-                    //{
-                    //    content = ViewModel.CurrentArticle.Rtf;
-                    //}
 
-                   // ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content);
-                    ArticleWebView.Visibility = Visibility.Visible;
-                    //ArticleWebView.IsReadOnly = true;
-                    LoadingProgressBar.IsActive = false;
-                    LoadingProgressBar.Visibility = Visibility.Collapsed;
-                //ArticleWebView.NavigateToString(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark)? "<style>*{color:white;}</style>":""));
 
+                WebViewPage.Instance.CurrentArticle = ViewModel.CurrentArticle;
+
+
+                //
+                    
+                LoadingProgressBar.IsActive = false;
+                LoadingProgressBar.Visibility = Visibility.Collapsed;
+      
                 if (!IsSeted)
                 {
                     ActualThemeChanged += (a, b) =>
@@ -233,25 +196,10 @@ namespace freeRSS
                         LoadingProgressBar.IsActive = true;
                         ViewModel.CurrentArticle = (ArticleModel)RSS_ArticleListView.SelectedItem;
                         ViewModel.CurrentArticle.UnRead = false;
-                        // 得在这里改改
-                        //
-                        // by Elipese
-                        // 2023/7/16
-                        //string content1 = "";
-                        //Spire.Doc.Document doc1 = new Spire.Doc.Document();
-                        //StringReader sr1 = new StringReader(ViewModel.CurrentArticle.Description + ((App.Current.RequestedTheme == ApplicationTheme.Dark) ? "<style>*{color:white;}</style>" : ""));
-                        //doc1.LoadHTML(sr1, Spire.Doc.Documents.XHTMLValidationType.None);
-                        //MemoryStream ms1 = new MemoryStream();
-                        //doc1.SaveToStream(ms1, Spire.Doc.FileFormat.Rtf);
-                        //byte[] data1 = ms1.ToArray();
-                        //sr1.Close();
-                        //ms1.Close();
-                        //doc1.Close();
-                        //content1 = Encoding.Default.GetString(data1);
-                        //ViewModel.CurrentArticle.Rtf = content1;
+                        
 
                         //ArticleWebView.TextDocument.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, content1);
-                        ArticleWebView.Visibility = Visibility.Visible;
+                        //ArticleWebView.Visibility = Visibility.Visible;
                         //ArticleWebView.IsReadOnly = true;
                         LoadingProgressBar.IsActive = false;
                         LoadingProgressBar.Visibility = Visibility.Collapsed;
@@ -291,5 +239,58 @@ namespace freeRSS
                 UpdateTile.UpDateTile(ViewModel.CurrentFeed.NewestArticles);
             }
         }
+
+        private void FeedsList_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        {
+            if (myframe.CanGoBack)
+            {
+                myframe.GoBack();
+            }
+            
+        }
+    }
+
+
+
+
+
+
+    public sealed partial class MainPage : INotifyPropertyChanged
+    {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public double LineHeight
+        {
+            get { 
+                return UserSetting.ReadSetting<double>(UserSetting.GetCallerPropertyName(),40);
+            }
+            set {
+                UserSetting.WriteSetting(UserSetting.GetCallerPropertyName(), value);
+                OnPropertyChanged(); 
+            
+            }
+        }
+        public double ContentFontSize
+        {
+            get
+            {
+                return UserSetting.ReadSetting<double>(UserSetting.GetCallerPropertyName(), 18);
+            }
+            set
+            {
+                UserSetting.WriteSetting(UserSetting.GetCallerPropertyName(), value);
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+
     }
 }

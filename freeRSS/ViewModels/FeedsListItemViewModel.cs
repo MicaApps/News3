@@ -43,13 +43,24 @@ namespace freeRSS.ViewModels
             }
         }
 
+        private object _innerobject;
+        public object InnerObject
+        {
+            get { return _innerobject; }
+            set
+            {
+                SetProperty(ref _innerobject, value);
+            }
+        }
+
         public static explicit operator FeedsListItemViewModel(Microsoft.UI.Xaml.Controls.NavigationViewItem item)
         {
             return new FeedsListItemViewModel()
             {
                 Title = (item.Content as TextBlock).Text,
                 SubTitle = "",
-                IconElement = item.Icon
+                IconElement = item.Icon,
+                InnerObject = item
             };
         }
 
@@ -59,7 +70,8 @@ namespace freeRSS.ViewModels
             {
                 Title = (v.Content as TextBlock).Text,
                 SubTitle = "",
-                IconElement = v.Icon
+                IconElement = v.Icon,
+                InnerObject = v
             };
         }
     }

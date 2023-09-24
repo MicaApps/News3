@@ -78,11 +78,6 @@ namespace freeRSS.View
         /// </summary>
         private async void DeleteArticlesButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (MainPage.Current.ViewModel.CurrentFeed.Id == 0)
-            {
-                errorTextBlock.Text = "You can not delete Article in Favourites";
-                return;
-            }
             await MainPage.Current.ViewModel.CurrentFeed.ClearOutTimeArticlesAsync();
             this.Hide();
         }
@@ -92,32 +87,24 @@ namespace freeRSS.View
         /// </summary>
         private async void DeleteFeedButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (MainPage.Current.ViewModel.CurrentFeed.Id == 0)
-            {
-                errorTextBlock.Text = "You can not delete Favourites";
-                return;
-            }
-            else
-            {
-                // 删除
-                await MainPage.Current.ViewModel.CurrentFeed.RemoveRelatedArticlesAsync();
-                await MainPage.Current.ViewModel.CurrentFeed.RemoveAFeedAsync();
-                MainPage.Current.ViewModel.Feeds.Remove(MainPage.Current.ViewModel.CurrentFeed);
+            // 删除
+            await MainPage.Current.ViewModel.CurrentFeed.RemoveRelatedArticlesAsync();
+            await MainPage.Current.ViewModel.CurrentFeed.RemoveAFeedAsync();
+            MainPage.Current.ViewModel.Feeds.Remove(MainPage.Current.ViewModel.CurrentFeed);
 
-                // 重新初始化CurrentFeed 和 CurrentArticle
-                MainPage.Current.ViewModel.CurrentFeed = MainPage.Current.ViewModel.Feeds.Count == 0 ?
-                    MainPage.Current.ViewModel.StarredFeed :
-                    MainPage.Current.ViewModel.Feeds[0];
+            // 重新初始化CurrentFeed 和 CurrentArticle
+            MainPage.Current.ViewModel.CurrentFeed = MainPage.Current.ViewModel.Feeds.Count == 0 ?
+                MainPage.Current.ViewModel.StarredFeed :
+                MainPage.Current.ViewModel.Feeds[0];
 
-                if(MainPage.Current.ViewModel.CurrentFeed.Articles.Count > 0)
-                {
-                    MainPage.Current.ViewModel.CurrentArticle = MainPage.Current.ViewModel.CurrentFeed.Articles[0] ?? null;
-                } else
-                {
-                    MainPage.Current.ViewModel.CurrentArticle = null;
-                }
-                this.Hide();
+            if(MainPage.Current.ViewModel.CurrentFeed.Articles.Count > 0)
+            {
+                MainPage.Current.ViewModel.CurrentArticle = MainPage.Current.ViewModel.CurrentFeed.Articles[0] ?? null;
+            } else
+            {
+                MainPage.Current.ViewModel.CurrentArticle = null;
             }
+            this.Hide();
         }
     }
 }
