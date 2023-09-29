@@ -168,6 +168,11 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Authors\HO-COOH.jpg" />
+    <Content Include="Assets\Authors\kitUIN.jpg" />
+    <Content Include="Assets\Authors\MicaApps.png" />
+    <Content Include="Assets\Authors\MicaCraft.png" />
+    <Content Include="Assets\Authors\Shomnipotence.jpg" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
     <Content Include="Assets\BadgeLogo.scale-150.png" />
