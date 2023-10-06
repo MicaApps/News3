@@ -13,8 +13,8 @@
     <image src="Assets\StoreLogo.png"/>
   </subgroup>
   <subgroup>
-    <text hint-style="subTltle" hint-wrap="true" hint-maxLines="2">Titles</text>
-    <text hint-style="captionSubtle">PublishedDate</text>
+    <text id="1" hint-style="subTltle" hint-wrap="true" hint-maxLines="2">Titles</text>
+    <text id="2" hint-style="captionSubtle">PublishedDate</text>
   </subgroup>
 </group>
 
